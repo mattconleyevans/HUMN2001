@@ -29,6 +29,7 @@ const startDate = new Date("1935-01-01").getTime();
 const endDate = new Date("1959-12-31").getTime();
 document.getElementById('dateSlider').min = startDate;
 document.getElementById('dateSlider').max = endDate;
+document.getElementById('dateSlider').value = startDate;
 
 // Function to generate the popup HTML based on the category and data
 function generatePopupHtml(category, row) {
@@ -175,7 +176,7 @@ function animateMapByDay() {
 // Function to start the animation
 function playAnimation() {
     if (!timer) {
-        timer = setInterval(animateMapByDay, 1);  // Adjust speed (~1 year per second)
+        timer = setInterval(animateMapByDay, 0.5);  // Adjust speed (~1 year per second)
     }
 }
 
