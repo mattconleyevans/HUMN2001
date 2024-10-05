@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melbourne Jewry during the Second World War</title>
+
+    <!-- Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <!-- D3.js for the animated plot and word cloud -->
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #1e1e1e;
+            color: white;
+        }
+
+        /* Container for title and subtitle */
+        .header-container {
+            background-color: black; /* Black background */
+            padding: 30px 0;  /* Adjust padding to surround title and subtitle */
+            text-align: center;  /* Center the text */
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 50px;
+            z-index: 10000;
+            position: relative;
+        }
+
+        h2 {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 5px;
+            font-weight: normal;
+            z-index: 10000;
+            position: relative;
+        }
+
+        h3 {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: normal;
+            z-index: 10000;
+            position: relative;
+        }
+
+        .content {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #map {
+            height: 600px;
+            width: 100%;
+            margin: 50px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .map-legend {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            font-size: 14px;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            z-index: 5000;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            z-index: 10000;
+        }
+
+        .year-display {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .date-controls {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 900px;
+            z-index: 10000;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="range"] {
+            width: 400px;
+            margin: 0 20px;
+        }
+
+        /* Style for the new plot */
+        .line-chart {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        svg {
+            background-color: transparent;
+            display: block;
+            margin: auto;
+        }
+
+        .minimal-axis text, .minimal-axis path, .minimal-axis line {
+            stroke: none;
+            fill: none;
+        }
+
+        svg {
+            background-color: transparent;
+            display: block;
+            margin: auto;
+        }
+
+        .minimal-theme text {
+            fill: white;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .word-cloud-container {
+            display: flex;
+            justify-content: center;  /* Center the word clouds */
+            width: 80%;  /* Reduce the overall container width */
+            margin: 0 auto;  /* Center the container */
+            margin-top: 100px;
+        }
+
+        .cloud {
+            width: 45%;  /* Keep the width of each cloud */
+            height: 500px;
+            position: relative;
+            margin: 0 10px;  /* Small margin between the two clouds */
+        }
+
+        .title {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .area-chart-container {
+            width: 80%;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        .area-svg {
+            background-color: transparent;
+            display: block;
+            margin: auto;
+        }
+
+        .area-legend {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .area-legend-item {
+            margin-right: 20px;
+            font-size: 14px;
+            color: white;
+        }
+
+        .area-legend-color-box {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+        }
+
+        .area-axis text {
+            fill: #ffffff;  /* Subtle axis labels */
+            font-size: 12px;
+        }
+
+        .hover-box {
+            width: 40%; /* Initial small size */
+            height: 100px; /* Small height before click */
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 10;
+            padding: 10px;
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 0 auto;
+            text-align: left;
+            margin-bottom: 100px;
+            position: relative;
+            transition: all 0.5s ease; /* Smooth transition */
+        }
+
+        .hover-box.expanded {
+            width: 90%; /* Larger size when expanded */
+            height: 800px; /* Taller height to fit the PDF */
+            padding: 20px;
+        }
+
+        .hover-box canvas {
+            width: auto;
+            max-width: 40%; /* Restrict width */
+            height: auto;
+            max-height: 100%;
+            margin-right: 20px;
+            display: block;
+        }
+
+        .hover-box .hover-text {
+            flex-grow: 1;
+            font-size: 10px;
+        }
+
+        .timeline-container {
+            width: 80%;
+            margin: auto;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            align-items: center;
+            height: 2px;
+            background-color: white;
+            margin-top: 30px;
+        }
+
+        .timeline-point {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .timeline-point span.year {
+            position: absolute;
+            top: -30px;
+            left: -10px;
+        }
+
+        .timeline-point .circle {
+            width: 12px;
+            height: 12px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .pdf-pagination {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            display: flex;
+            justify-content: center;
+            width: 40%;
+            z-index: 2;
+        }
+
+        .pagination-circle {
+            width: 12px;
+            height: 12px;
+            background-color: white;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .pagination-circle.active {
+            background-color: orange;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Title and Subtitle -->
+    <h1>Melbourne Jewry during the Second World War</h1>
+    <h2>Using the Australian Jewish News to map Jewish life in Melbourne, 1935-1960</h2>
+    <h3>HUMN2001 Final Project - Matthew Conley-Evans (u7117029)</h3>
+
+    <!-- Placeholder Content Above the Map -->
+    <div class="content">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit quam nec lacus placerat,
+            id elementum libero pharetra. Curabitur at venenatis nisl, et vulputate felis. Fusce posuere tellus
+            id nisl pharetra, nec eleifend lectus tempor. Nulla facilisi. Suspendisse potenti. Duis tristique nunc
+            vel augue commodo, nec interdum libero scelerisque. Pellentesque ullamcorper nunc vitae felis auctor,
+            et tristique nisl scelerisque.
+        </p>
+    </div>
+
+    <!-- Map Container -->
+    <div id="map">
+        <div class="map-legend">
+            <b>Legend</b><br>
+            <i style="color: #63a3db;">&#9679;</i> Birth<br>
+            <i style="color: #f46868;">&#9679;</i> Death<br>
+            <i style="color: #66cc66;">&#9679;</i> Marriage<br>
+            <i style="color: #ffd700;">&#9679;</i> Bar Mitzvah<br>
+            <i style="color: #d8b0ff;">&#9679;</i> Engagement<br>
+        </div>
+    </div>
+
+    <!-- Date Controls Below the Map -->
+    <div class="date-controls">
+        <div class="controls">
+            <button id="playBtn" onclick="playAnimation()">Play</button>
+            <button id="pauseBtn" onclick="pauseAnimation()">Pause</button>
+            <input type="range" id="dateSlider" min="1935" max="1960" value="1935" step="1" oninput="updateYearDisplay(this.value)">
+        </div>
+        <div class="year-display">
+            Year: <span id="currentYear">1935</span>
+        </div>
+    </div>
+
+    <!-- Placeholder Content Below the Map -->
+    <div class="content">
+        <p>
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+    </div>
+
+    <!-- Heatmap Container -->
+        <div id="heatmap" style="height: 600px; width: 40%; margin: auto; margin-bottom: 50px;"></div>
+
+        <script>
+            // Initialize the heatmap with no interactions (static map)
+            var heatmap = L.map('heatmap', {
+                attributionControl: false,
+                zoomControl: false,
+                dragging: false,
+                scrollWheelZoom: false,
+                doubleClickZoom: false,
+                boxZoom: false,
+                keyboard: false,
+                tap: false,
+                zoomSnap: 0,   // Prevent zoom level snapping
+                zoomDelta: 0,  // No zoom allowed
+                inertia: false,
+                interactive: false  // Disable all interactions
+            }).setView([-37.8136, 144.9631], 11);
+
+            // Add base map tiles without attribution
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png').addTo(heatmap);
+
+            var heatCoordinates = [];
+
+            // Function to load CSV and aggregate coordinates for the heatmap
+            function loadHeatmapData(file) {
+                Papa.parse(file, {
+                    download: true,
+                    header: true,
+                    complete: function(results) {
+                        results.data.forEach(function(row) {
+                            if (row['Coordinates']) {
+                                var coords = row['Coordinates'].split(', ');
+                                var lat = parseFloat(coords[0].trim());
+                                var lon = parseFloat(coords[1].trim());
+                                if (!isNaN(lat) && !isNaN(lon)) {
+                                    heatCoordinates.push([lat, lon, 0.2]); // Slightly reduced intensity
+                                }
+                            }
+                        });
+
+                        // Add the heatmap layer once data is loaded
+                        var heatLayer = L.heatLayer(heatCoordinates, {
+                            radius: 7,  // Keep the radius small but precise
+                            blur: 12,   // Slight blur for smoother transitions
+                            maxZoom: 11,  // Same zoom level as the map
+                            gradient: {  // Previous color palette
+                                0.3: '#63a3db',  // Light blue
+                                0.5: '#66cc66',  // Green
+                                0.75: '#ffd700',  // Yellow
+                                0.9: '#f46868'   // Red for the highest density areas
+                            },
+                            max: 1.0,
+                            interactive: false
+                        }).addTo(heatmap);
+                    },
+                    error: function(error) {
+                        console.error('Error loading CSV:', error);
+                    }
+                });
+            }
+
+            // Load all CSVs for the heatmap
+            loadHeatmapData('data/births.csv');
+            loadHeatmapData('data/deaths.csv');
+            loadHeatmapData('data/engagements.csv');
+
+            // Function to generate pop-up HTML
+            function generatePopupHTML(title, imageUrl, text) {
+                return `
+                    <div style="display: flex; align-items: center;">
+                        <img src="${imageUrl}" style="width: 100px; margin-right: 15px;">
+                        <div style="font-size: 14px;">
+                            <h4 style="margin: 0;">${title}</h4>
+                            <p style="margin: 0;">${text}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Add all prominent circle points with pop-ups (color changed to subtle grey)
+            var mhc = L.circleMarker([-37.835183558841265, 144.976876323271], {
+                radius: 7,
+                color: '#808080',   // Subtle grey color
+                fillColor: '#808080',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            mhc.bindPopup(generatePopupHTML('Melbourne Hebrew Congregation', 'data/mhc.jpg', 'Placeholder text for MHC'));
+
+            var eastmelb = L.circleMarker([-37.80856093901756, 144.97402273861675], {
+                radius: 7,
+                color: '#808080',
+                fillColor: '#808080',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            eastmelb.bindPopup(generatePopupHTML('East Melbourne Hebrew Congregation', 'data/emhc.jpg', 'Placeholder text for EMHC'));
+
+            var carlton = L.circleMarker([-37.795657373280726, 144.97003325513077], {
+                radius: 4,
+                color: '#808080',
+                fillColor: '#808080',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            carlton.bindPopup(generatePopupHTML('Carlton Synagogue', 'data/carlton.jpeg', 'Placeholder text for Carlton Synagogue'));
+
+            var stkilda = L.circleMarker([-37.85933523423765, 144.98528666598537], {
+                radius: 4,
+                color: '#808080',
+                fillColor: '#808080',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            stkilda.bindPopup(generatePopupHTML('St Kilda Hebrew Congregation', 'data/stkilda.jpg', 'Placeholder text for St Kilda Hebrew Congregation'));
+
+            var bethisrael = L.circleMarker([-37.86029707556212, 144.9909225460374], {
+                radius: 7,
+                color: '#808080',
+                fillColor: '#808080',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            bethisrael.bindPopup(generatePopupHTML('Temple Beth Israel', 'data/bethisrael.webp', 'Placeholder text for Temple Beth Israel'));
+
+            var elwood = L.circleMarker([-37.87289497354217, 144.98598995767284], {
+                radius: 4,
+                color: '#808080',
+                fillColor: '#808080',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            elwood.bindPopup(generatePopupHTML('Elwood Synagogue', 'data/elwood.jpg', 'Placeholder text for Elwood Synagogue'));
+
+            var adass = L.circleMarker([-37.86849132178424, 144.98708760000002], {
+                radius: 4,
+                color: '#808080',
+                fillColor: '#808080',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            adass.bindPopup(generatePopupHTML('Adass Israel', 'data/adassisrael.jpg', 'Placeholder text for Adass Israel'));
+
+            var caulfield = L.circleMarker([-37.86739027808721, 145.01135536672518], {
+                radius: 4,
+                color: '#808080',
+                fillColor: '#808080',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            caulfield.bindPopup(generatePopupHTML('Caulfield Hebrew Congregation', 'data/caulfield.jpg', 'Placeholder text for Caulfield Hebrew Congregation'));
+
+            var kew = L.circleMarker([-37.80200747431732, 145.03199325559146], {
+                radius: 4,
+                color: '#808080',
+                fillColor: '#808080',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            kew.bindPopup(generatePopupHTML('Kew Hebrew Congregation', 'data/kew.jpg', 'Placeholder text for Kew Hebrew Congregation'));
+
+            // Disable all map interactions (make static)
+            heatmap.dragging.disable();
+            heatmap.touchZoom.disable();
+            heatmap.doubleClickZoom.disable();
+            heatmap.scrollWheelZoom.disable();
+            heatmap.boxZoom.disable();
+            heatmap.keyboard.disable();
+
+            // Add a legend for "Synagogue"
+            var legend = L.control({ position: 'bottomleft' });
+
+            legend.onAdd = function () {
+                var div = L.DomUtil.create('div', 'map-legend');
+                div.innerHTML = `
+                    <div style="background-color: rgba(255, 255, 255, 0.8); padding: 8px; border-radius: 5px;">
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background-color: #808080; border-radius: 50%; margin-right: 8px;"></div>
+                            <span>Synagogue</span>
+                        </div>
+                    </div>
+                `;
+                return div;
+            };
+
+            legend.addTo(heatmap);
+        </script>
+
+        <div class="content">
+            <p>
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </div>
+
+    <!-- Word Clouds Side by Side -->
+    <div class="word-cloud-container">
+        <div class="cloud">
+            <div class="title">1870s</div>
+            <div id="cloud-1870"></div>
+        </div>
+        <div class="cloud">
+            <div class="title">1930s</div>
+            <div id="cloud-1930"></div>
+        </div>
+    </div>
+
+    <script>
+        // Load CSV data and filter by time periods
+        d3.csv("data/surnames.csv").then(function(data) {
+
+            // Get top 15 surnames for 1870-1880 period
+            const surnames1870 = getTopSurnames(data, 1870, 1880);
+
+            // Get top 15 surnames for 1930-1945 period
+            const surnames1930 = getTopSurnames(data, 1930, 1939);
+
+            // Create both word clouds once when scrolling reaches trigger point
+            let cloudsCreated = false;  // Ensure we don't create them multiple times
+
+            window.addEventListener('scroll', () => {
+                const scrollPos = window.scrollY;
+                const triggerHeight = window.innerHeight / 2;
+
+                if (scrollPos > triggerHeight && !cloudsCreated) {
+                    createWordCloud("#cloud-1870", surnames1870);
+                    createWordCloud("#cloud-1930", surnames1930);
+                    cloudsCreated = true;  // Ensure it only triggers once
+                }
+            });
+        });
+
+        // Function to get top 15 surnames for a given period
+        function getTopSurnames(data, startYear, endYear) {
+            // Filter data for the specific time range
+            const filteredData = data.filter(d => +d.year >= startYear && +d.year <= endYear);
+
+            // Aggregate counts by surname
+            const surnameCounts = {};
+            filteredData.forEach(d => {
+                const surname = d.surnames;  // Use correct "surnames" column
+                const count = +d.count;
+
+                if (surnameCounts[surname]) {
+                    surnameCounts[surname] += count;
+                } else {
+                    surnameCounts[surname] = count;
+                }
+            });
+
+            // Convert aggregated counts to an array of objects
+            const aggregatedSurnames = Object.keys(surnameCounts).map(surname => {
+                return { text: surname, size: surnameCounts[surname] };
+            });
+
+            // Sort by count and take the top 15 surnames
+            return aggregatedSurnames
+                .sort((a, b) => b.size - a.size)
+                .slice(0, 15);
+        }
+
+        // Function to create a word cloud
+        function createWordCloud(containerId, words) {
+            const maxCount = d3.max(words, d => d.size);  // Find max size for normalization
+
+            const layout = d3.layout.cloud()
+                .size([500, 400])
+                .words(words.map(d => Object.create(d)))
+                .padding(5)
+                .rotate(d => (d.size > 30 ? 0 : ~~(Math.random() * 2) * 90))  // Larger names horizontal, smaller ones may be vertical
+                .font("Roboto")
+                .fontSize(d => (d.size / maxCount) * 100)  // Normalize font size
+                .on("end", draw);
+
+            layout.start();
+
+            function draw(words) {
+                const svg = d3.select(containerId).append("svg")
+                    .attr("width", layout.size()[0])
+                    .attr("height", layout.size()[1])
+                    .append("g")
+                    .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")");
+
+                const text = svg.selectAll("text")
+                    .data(words)
+                    .enter().append("text")
+                    .style("font-size", d => d.size + "px")
+                    .style("fill", (d, i) => d3.interpolateBlues(i / 10))  // Softer, toned-down colors
+                    .attr("text-anchor", "middle")
+                    .attr("transform", d => "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")")
+                    .text(d => d.text)
+                    .style("opacity", 0);  // Start with 0 opacity
+
+                // Animate the words appearing one by one
+                text.transition()
+                    .delay((d, i) => i * 300)
+                    .duration(800)
+                    .style("opacity", 1);
+            }
+        }
+    </script>
+
+    <div class="content">
+        <p>
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+    </div>
+
+    <!-- New Animated Plot -->
+    <div class="line-chart" id="line-chart"></div>
+
+    <!-- Placeholder Text After the Plot -->
+    <div class="content">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Donec suscipit quam nec lacus placerat, id elementum libero pharetra.
+        </p>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        // Set up SVG and margins
+        var margin = {top: 20, right: 150, bottom: 30, left: 60},  // Increase right margin for label space
+            width = 800 - margin.left - margin.right,  // Increase total width to allow room for labels
+            height = 450 - margin.top - margin.bottom;
+
+        var svg = d3.select("#line-chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        // Data
+        var data = [
+            {label: "Bernstein", values: [0.009006, 0.029132]},
+            {label: "Waxman", values: [0.008335, 0.025862]},
+            {label: "Goldsmith", values: [0.005076, 0.011976]},
+            {label: "Kraetzer", values: [0.005076, 0.016667]},
+            {label: "Rosenfeld", values: [0.005939, 0.020977]}
+        ];
+
+        // X and Y scales
+        var x = d3.scalePoint()
+            .domain(["1870s", "1930s"])
+            .range([0, width]);
+
+        var y = d3.scaleLinear()
+            .domain([0, 0.03])
+            .range([height, 0]);
+
+        // Line generator
+        var line = d3.line()
+            .x(function (d, i) {
+                return x(i === 0 ? "1870s" : "1930s");
+            })
+            .y(function (d) {
+                return y(d);
+            });
+
+        // Colors
+        var color = d3.scaleOrdinal()
+            .domain(data.map(function (d) {
+                return d.label;
+            }))
+            .range(["#FF6F61", "#6B5B95", "#88B04B", "#ffd700", "#63a3db"]);  // Softer, varied colors
+
+        // Plot lines
+        data.forEach(function (d) {
+            var path = svg.append("path")
+                .datum(d.values)
+                .attr("fill", "none")
+                .attr("stroke", color(d.label))
+                .attr("stroke-width", 2)
+                .attr("d", line)
+                .attr("stroke-dasharray", function () {
+                    var totalLength = this.getTotalLength();
+                    return totalLength + " " + totalLength;
+                })
+                .attr("stroke-dashoffset", function () {
+                    return this.getTotalLength();
+                });
+
+            // Animate line on scroll
+            window.addEventListener('scroll', function () {
+                var chartPosition = svg.node().getBoundingClientRect();
+                if (chartPosition.top < window.innerHeight && chartPosition.bottom >= 0) {
+                    path.transition()
+                        .duration(2000)
+                        .attr("stroke-dashoffset", 0);
+                }
+            });
+
+            // Add round points at each end of the line
+            svg.selectAll(".dot")
+                .data(d.values)
+                .enter().append("circle")
+                .attr("cx", function(d, i) { return x(i === 0 ? "1870s" : "1930s"); })
+                .attr("cy", function(d) { return y(d); })
+                .attr("r", 5)
+                .attr("fill", color(d.label));
+
+            // Labels right next to the points
+            svg.append("text")
+                .attr("x", width + 5)  // Place label close to the point
+                .attr("y", y(d.values[1]))  // Align with the last point
+                .attr("dy", ".35em")
+                .attr("fill", color(d.label))
+                .style("font-size", "22px")
+                .style("font-weight", "bold")
+                .text(d.label);
+            });
+
+            svg.append("text")
+                .attr("x", -60)
+                .attr("y", y(0.005))  // Correctly use 0.005 for "0.5%"
+                .attr("dy", ".35em")
+                .attr("fill", "white")
+                .style("font-size", "16px")
+                .style("opacity", 0.7)  // Subtle effect
+                .text("0.5%");
+
+            svg.append("text")
+                .attr("x", -60)
+                .attr("y", y(0.025))  // Correctly use 0.025 for "2.5%"
+                .attr("dy", ".35em")
+                .attr("fill", "white")
+                .style("font-size", "16px")
+                .style("opacity", 0.7)  // Subtle effect
+                .text("2.5%");
+
+            svg.append("text")
+                .attr("x", x("1870s"))
+                .attr("y", height + 30)
+                .attr("fill", "white")
+                .style("font-size", "16px")
+                .style("opacity", 0.7)  // Subtle effect
+                .style("text-anchor", "middle")
+                .text("1870s");
+
+            svg.append("text")
+                .attr("x", x("1930s"))
+                .attr("y", height + 30)
+                .attr("fill", "white")
+                .style("font-size", "16px")
+                .style("opacity", 0.7)  // Subtle effect
+                .style("text-anchor", "middle")
+                .text("1930s");
+
+        // Minimal X and Y axis
+        svg.append("g")
+            .attr("class", "minimal-axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x).ticks(2));
+
+        svg.append("g")
+            .attr("class", "minimal-axis")
+            .call(d3.axisLeft(y).ticks(3));
+    </script>
+
+    <!-- Area Chart Container -->
+    <div class="area-chart-container">
+        <svg class="area-svg" width="800" height="400"></svg>
+        <div class="area-legend"></div>
+    </div>
+
+    <script>
+        // Load the data from the CSV file
+        d3.csv("data/topics.csv").then(function(data) {
+            // Parse the data
+            data.forEach(function(d) {
+                d.Year = +d.Year;
+                d.Frequency = +d.Frequency;
+            });
+
+            // Filter out data after 1959
+            data = data.filter(d => d.Year <= 1959);
+
+            // Group the data by Year and aggregate the Frequency by Topic
+            const topics = Array.from(new Set(data.map(d => d.Topic)));
+            const dataByYear = Array.from(d3.rollup(
+                data,
+                values => {
+                    const result = { Year: values[0].Year };  // Initialize with the year
+                    topics.forEach(topic => {
+                        result[topic] = d3.sum(values.filter(v => v.Topic === topic), d => d.Frequency) || 0;
+                    });
+                    return result;
+                },
+                d => d.Year
+            ), ([, value]) => value);
+
+            // Create the stack layout
+            const stack = d3.stack()
+                .keys(topics)
+                .order(d3.stackOrderNone)
+                .offset(d3.stackOffsetNone);
+
+            const stackedData = stack(dataByYear);
+
+            // Create an area chart based on the frequency of each topic by year
+            const svg = d3.select(".area-svg"),
+                  width = +svg.attr("width"),
+                  height = +svg.attr("height"),
+                  margin = { top: 20, right: 50, bottom: 40, left: 50 };
+
+            // X scale: Years (keep max at 1960, even though no data after 1959)
+            const x = d3.scaleLinear()
+                .domain([d3.min(data, d => d.Year), 1960])
+                .range([margin.left, width - margin.right]);
+
+            // Y scale: Cumulative frequencies
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(stackedData, layer => d3.max(layer, d => d[1])) * 1.1])
+                .range([height - margin.bottom, margin.top]);
+
+            const color = d3.scaleOrdinal(d3.schemeCategory10)
+                .domain(topics);
+
+            // Add the shaded region for the Second World War (1939-1945) **BEHIND the area plot**
+            svg.append("rect")
+                .attr("x", x(1939))
+                .attr("y", margin.top)
+                .attr("width", x(1945) - x(1939))  // Width is from 1939 to 1945
+                .attr("height", height - margin.top - margin.bottom)
+                .attr("fill", "rgba(150, 150, 150, 0.3)");  // Subtle shaded area
+
+            // Define the area generator for stacked data
+            const area = d3.area()
+                .x(d => x(d.data.Year))
+                .y0(d => y(d[0]))
+                .y1(d => y(d[1]))
+                .curve(d3.curveMonotoneX);  // Smooth curve
+
+            // Add the stacked areas for each topic
+            svg.selectAll(".area")
+                .data(stackedData)
+                .enter().append("path")
+                .attr("class", "area")
+                .attr("fill", d => color(d.key))
+                .attr("d", area)
+                .style("opacity", 0)  // Start with 0 opacity for animation
+                .transition()  // Gradually fill in on scroll
+                .duration(2000)
+                .delay((d, i) => i * 200)
+                .style("opacity", 1);
+
+            // Add the x-axis
+            svg.append("g")
+                .attr("class", "area-axis")
+                .attr("transform", `translate(0, ${height - margin.bottom})`)
+                .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));  // Subtle x-axis with year labels
+
+            // Add the legend
+            const legend = d3.select(".area-legend");
+            topics.forEach(function(topic) {
+                const legendItem = legend.append("div").attr("class", "area-legend-item");
+                legendItem.append("div")
+                    .attr("class", "area-legend-color-box")
+                    .style("background-color", color(topic));
+                legendItem.append("span").text(topic);
+            });
+
+            // Add label for "Second World War" **aligned vertically with the Israel label**
+            const labelYPosition = margin.top + 20;  // Set the same y position for both labels
+
+            // Label for "Second World War"
+            svg.append("text")
+                .attr("x", (x(1939) + x(1945)) / 2)  // Center label between 1939 and 1945
+                .attr("y", labelYPosition)
+                .attr("text-anchor", "middle")
+                .attr("fill", "white")
+                .text("Second World War");
+
+            // Add vertical line for the Founding of Israel (1948)
+            svg.append("line")
+                .attr("x1", x(1948))
+                .attr("x2", x(1948))
+                .attr("y1", margin.top)
+                .attr("y2", height - margin.bottom)
+                .attr("stroke", "rgba(255, 255, 255, 0.7)")
+                .attr("stroke-width", 2)
+                .attr("stroke-dasharray", "4,4");  // Dashed line
+
+            // Add label for "Founding of Israel" **aligned with the war label**
+            svg.append("text")
+                .attr("x", x(1948) + 5)  // Slightly offset from the line
+                .attr("y", labelYPosition)  // Same y position as the "Second World War" label
+                .attr("text-anchor", "start")
+                .attr("fill", "white")
+                .text("Founding of Israel");
+
+            svg.append("text")
+                .attr("x", width - margin.right - 5)  // Positioned near the right edge
+                .attr("y", height + margin.bottom - 42)  // Adjust position to stay above the axis
+                .attr("text-anchor", "end")  // Align text to the right
+                .attr("fill", "white")
+                .style("font-size", "12px")
+                .style("opacity", 0.7)
+                .style("pointer-events", "none")  // Ensure it doesn't interfere with other elements
+                .text("*Publication of the AJN was more infrequent in 1953");
+
+        });
+    </script>
+
+
+    <div class="content">
+        <p>
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+    </div>
+
+    <div class="timeline-container">
+        <!-- Hover Box with Default Image and Text -->
+        <div class="hover-box" id="hoverBox">
+            <canvas id="pdfViewer"></canvas> <!-- PDF display area -->
+            <div class="hover-text">
+                <p id="hoverText">Click on a year to see a summary of the first July issue of the AJN in that year.</p>
+            </div>
+            <div class="pdf-pagination" id="pagination"></div> <!-- Pagination circles inside the hover box -->
+        </div>
+
+        <!-- Timeline Points -->
+        <div class="timeline">
+            <div class="timeline-point" onclick="showPDF('1935.pdf', 12)">
+                <span class="year">1935</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1936.pdf', 12)">
+                <span class="year">1936</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1937.pdf', 12)">
+                <span class="year">1937</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1938.pdf', 12)">
+                <span class="year">1938</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1939.pdf', 12)">
+                <span class="year">1939</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1940.pdf', 12)">
+                <span class="year">1940</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1941.pdf', 12)">
+                <span class="year">1941</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1942.pdf', 12)">
+                <span class="year">1942</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1943.pdf', 12)">
+                <span class="year">1943</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1944.pdf', 12)">
+                <span class="year">1944</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1945.pdf', 12)">
+                <span class="year">1945</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1946.pdf', 12)">
+                <span class="year">1946</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1947.pdf', 12)">
+                <span class="year">1947</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1948.pdf', 12)">
+                <span class="year">1948</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1949.pdf', 12)">
+                <span class="year">1949</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1950.pdf', 12)">
+                <span class="year">1950</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1951.pdf', 12)">
+                <span class="year">1951</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1952.pdf', 12)">
+                <span class="year">1952</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1953.pdf', 12)">
+                <span class="year">1953</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1954.pdf', 12)">
+                <span class="year">1954</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1955.pdf', 12)">
+                <span class="year">1955</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1956.pdf', 12)">
+                <span class="year">1956</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1957.pdf', 12)">
+                <span class="year">1957</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1958.pdf', 12)">
+                <span class="year">1958</span>
+                <div class="circle"></div>
+            </div>
+            <div class="timeline-point" onclick="showPDF('1959.pdf', 12)">
+                <span class="year">1959</span>
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+    <script>
+        let pdfDoc = null;
+        let currentPage = 1;
+        let totalPages = 0;
+        const canvas = document.getElementById('pdfViewer');
+        const ctx = canvas.getContext('2d');
+
+        function resetHover() {
+            const hoverBox = document.getElementById('hoverBox');
+            document.getElementById('hoverText').textContent = "Click on a year to see a summary of the first July issue of the AJN in that year.";
+            document.getElementById('pagination').innerHTML = '';
+            canvas.width = 0;
+            canvas.height = 0;  // Hide the canvas by resetting size
+            hoverBox.classList.remove('expanded'); // Make hover box small again
+        }
+
+        let summaries = {};  // Object to store the summaries
+
+        // Load the summaries from the CSV file
+        d3.csv("data/summaries.csv").then(function(data) {
+            data.forEach(d => {
+                summaries[d.year] = d.summary;  // Store summaries by year
+            });
+        });
+
+        function adjustFontSizeToFit() {
+            const hoverText = document.getElementById('hoverText');
+            const hoverBox = document.getElementById('hoverBox');
+            let fontSize = 18;  // Start with a default font size
+            hoverText.style.fontSize = fontSize + 'px';  // Apply initial font size
+
+            // Continuously reduce the font size until it fits in the hover box
+            while (hoverText.scrollHeight > hoverBox.clientHeight - 40 || hoverText.scrollWidth > hoverBox.clientWidth - 40) {
+                fontSize--;  // Reduce font size
+                hoverText.style.fontSize = fontSize + 'px';  // Apply updated font size
+                if (fontSize <= 12) break;  // Set a minimum font size limit
+            }
+        }
+
+        function showPDF(pdfUrl, totalPagesCount) {
+            totalPages = totalPagesCount;
+            currentPage = 1;
+
+            // Expand the hover box when a year is clicked
+            const hoverBox = document.getElementById('hoverBox');
+            hoverBox.classList.add('expanded');  // Expand the hover box
+
+            // Wait a little for the hover box to fully expand before rendering the PDF
+            setTimeout(() => {
+                // Fetch the PDF
+                pdfjsLib.getDocument('data/' + pdfUrl).promise.then(function(pdf) {
+                    pdfDoc = pdf;
+                    renderPage(currentPage);
+                    createPagination();
+                });
+
+                // Extract the year from the PDF filename
+                const year = pdfUrl.slice(0, 4);
+
+                // Check if we have a summary for this year in the CSV
+                const summary = summaries[year] ? summaries[year].replace(/\n/g, '<br>') : `No summary available for ${year}`;
+
+                // Update the text content, with line breaks preserved
+                const hoverText = document.getElementById('hoverText');
+                hoverText.innerHTML = summary;
+
+                // Adjust the font size dynamically to fit the text within the hover box
+                adjustFontSizeToFit();
+            }, 300);  // Adjust delay time as necessary (300ms should give enough time)
+        }
+
+        // Render the PDF page to fit the box
+        function renderPage(pageNum) {
+            pdfDoc.getPage(pageNum).then(function(page) {
+                const viewport = page.getViewport({ scale: 1 });
+
+                // Calculate the aspect ratio and scaling factor based on the hoverBox size
+                const hoverBox = document.getElementById('hoverBox');
+                const hoverBoxHeight = hoverBox.offsetHeight - 40;
+                const hoverBoxWidth = 0.4 * hoverBox.offsetWidth; // Allocate 40% of the box width to the PDF
+
+                // Maintain aspect ratio of the PDF page
+                const aspectRatio = viewport.width / viewport.height;
+                let canvasWidth = hoverBoxWidth;
+                let canvasHeight = hoverBoxWidth / aspectRatio;
+
+                // If the height exceeds the hoverBox, adjust to fit height instead
+                if (canvasHeight > hoverBoxHeight) {
+                    canvasHeight = hoverBoxHeight;
+                    canvasWidth = hoverBoxHeight * aspectRatio;
+                }
+
+                // Set up canvas to respect device pixel ratio
+                const outputScale = window.devicePixelRatio || 1;
+                const scaledViewport = page.getViewport({ scale: outputScale * (canvasWidth / viewport.width) });
+
+                // Set canvas size and scale for high-DPI displays
+                canvas.width = scaledViewport.width;
+                canvas.height = scaledViewport.height;
+                canvas.style.width = `${canvasWidth}px`;
+                canvas.style.height = `${canvasHeight}px`;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: scaledViewport,
+                };
+
+                // Render the PDF page onto the canvas
+                page.render(renderContext);
+            });
+        }
+
+        // Create pagination for multiple PDF pages
+        function createPagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const circle = document.createElement('div');
+                circle.classList.add('pagination-circle');
+                if (i === currentPage) circle.classList.add('active');
+                circle.addEventListener('click', () => {
+                    currentPage = i;
+                    renderPage(currentPage);
+                    updatePagination();
+                });
+                pagination.appendChild(circle);
+            }
+        }
+
+        // Update pagination circles to show current page
+        function updatePagination() {
+            const circles = document.querySelectorAll('.pagination-circle');
+            circles.forEach((circle, index) => {
+                if (index + 1 === currentPage) {
+                    circle.classList.add('active');
+                } else {
+                    circle.classList.remove('active');
+                }
+            });
+        }
+
+        // Initially show default state
+        resetHover();
+
+        </script>
+
+        <div class="content">
+            <p>
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </div>
+
+
+
+    </body>
+    </html>
