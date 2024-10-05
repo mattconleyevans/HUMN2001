@@ -1,8 +1,10 @@
 // Initialize the map, centered on Melbourne
 var map = L.map('map', {
     scrollWheelZoom: false,  // Disable scroll zoom
-    zoomControl: true  // Keep zoom control buttons enabled
-}).setView([-37.8136, 144.9631], 11.5);
+    zoomControl: true,
+    zoomSnap: 0.01,          // Allow finer control over zoom (fractional zooms)
+    zoomDelta: 0.01          // Set the smallest zoom increment// Keep zoom control buttons enabled
+}).setView([-37.8506, 144.9631], 11.3);
 
 // Add the CartoDB Positron tiles to the map (similar to Folium)
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -18,9 +20,15 @@ var categoryColors = {
     'ENGAGEMENT': '#d8b0ff'  // Purple
 };
 
-var markers = {};  // To keep track of markers by their year
+var markers = {};  // To keep track of markers by their date
 var timer = null;  // Holds reference to the interval for play/pause
-var currentYear = 1935;  // Initial year
+var currentDate = new Date("1935-01-01");  // Initial date
+
+// Convert date to timestamp and set slider bounds
+const startDate = new Date("1935-01-01").getTime();
+const endDate = new Date("1959-12-31").getTime();
+document.getElementById('dateSlider').min = startDate;
+document.getElementById('dateSlider').max = endDate;
 
 // Function to generate the popup HTML based on the category and data
 function generatePopupHtml(category, row) {
@@ -72,7 +80,6 @@ function generatePopupHtml(category, row) {
     }
 }
 
-// Function to add points to the map
 function addPointToMap(lat, lon, category, row) {
     var popupHtml = generatePopupHtml(category, row);
     var marker = L.circleMarker([lat, lon], {
@@ -82,15 +89,16 @@ function addPointToMap(lat, lon, category, row) {
         radius: 3  // Smaller radius
     }).bindPopup(popupHtml);
 
-    // Store markers in an object based on their year for easy removal
-    var year = new Date(row['Date']).getFullYear();
-    if (!markers[year]) {
-        markers[year] = [];
+    // Store markers in an object based on their date for easy removal
+    var eventDate = new Date(row['Date']).getTime();  // Parse date to timestamp
+    console.log(`Adding marker at ${lat}, ${lon} for date ${row['Date']}`);  // Debug log for coordinates
+    if (!markers[eventDate]) {
+        markers[eventDate] = [];
     }
-    markers[year].push(marker);
+    markers[eventDate].push(marker);
 }
 
-// Function to parse CSV and extract data
+// Function to load data and add markers from CSV
 function loadCSV(file, category) {
     Papa.parse(file, {
         download: true,
@@ -98,11 +106,9 @@ function loadCSV(file, category) {
         complete: function(results) {
             results.data.forEach(function(row) {
                 if (row['Coordinates'] && row['Date']) {
-                    // Parse coordinates
                     var coords = row['Coordinates'].split(', ');
                     var lat = parseFloat(coords[0].trim());
                     var lon = parseFloat(coords[1].trim());
-
                     if (!isNaN(lat) && !isNaN(lon)) {
                         addPointToMap(lat, lon, category, row);
                     } else {
@@ -112,65 +118,64 @@ function loadCSV(file, category) {
                     console.error(`Missing coordinates or date in row: ${JSON.stringify(row)}`);
                 }
             });
-        },
-        error: function(error) {
-            console.error('Error loading CSV:', error);
         }
     });
 }
 
-// Load each dataset
+// Load data for all events
 loadCSV('data/births.csv', 'BIRTH');
 loadCSV('data/deaths.csv', 'DEATH');
 loadCSV('data/marriages.csv', 'MARRIAGE');
 loadCSV('data/engagements.csv', 'ENGAGEMENT');
 loadCSV('data/barmitzvah.csv', 'BAR MITZVAH');
 
-// Function to remove all markers
 function clearMap() {
-    Object.keys(markers).forEach(function(year) {
-        markers[year].forEach(function(marker) {
+    Object.keys(markers).forEach(function(date) {
+        markers[date].forEach(function(marker) {
             map.removeLayer(marker);
         });
     });
 }
 
-// Function to update the map based on the current year and show points for two extra years
-function updateMapForYear(year) {
-    clearMap();  // Remove all markers
+function updateMapForDate(date) {
+    clearMap();
 
-    // Show markers for the current year, and two years afterward
-    for (var i = year; i <= year + 2; i++) {
-        if (markers[i]) {
-            markers[i].forEach(function(marker) {
+    var threeYearsAgo = new Date(date);
+    threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);
+
+    Object.keys(markers).forEach(function(dateKey) {
+        var eventDate = new Date(parseInt(dateKey));
+        if (eventDate >= threeYearsAgo && eventDate <= date) {
+            console.log(`Showing marker for event on ${eventDate}`);  // Debug log for date filtering
+            markers[dateKey].forEach(function(marker) {
                 marker.addTo(map);
             });
         }
-    }
+    });
 }
 
-// Function to update the year display
-function updateYearDisplay(year) {
-    document.getElementById('currentYear').innerText = year;
-    currentYear = parseInt(year);
-    updateMapForYear(currentYear);
+// Function to update the date display
+function updateDateDisplay(timestamp) {
+    currentDate = new Date(parseInt(timestamp));
+    document.getElementById('currentDate').innerText = currentDate.toISOString().split('T')[0];
+    updateMapForDate(currentDate);
 }
 
-// Function to animate the map by incrementing the year
-function animatePointsByYear() {
-    if (currentYear < 1960) {
-        currentYear++;
-        document.getElementById('dateSlider').value = currentYear;
-        updateYearDisplay(currentYear);
+// Function to animate the map day by day
+function animateMapByDay() {
+    if (currentDate.getTime() < endDate) {
+        currentDate.setDate(currentDate.getDate() + 1);
+        document.getElementById('dateSlider').value = currentDate.getTime();
+        updateDateDisplay(currentDate.getTime());
     } else {
-        pauseAnimation();  // Stop when reaching the last year
+        pauseAnimation();  // Stop at the end
     }
 }
 
 // Function to start the animation
 function playAnimation() {
     if (!timer) {
-        timer = setInterval(animatePointsByYear, 1000);  // Change speed if needed
+        timer = setInterval(animateMapByDay, 1);  // Adjust speed (~1 year per second)
     }
 }
 
@@ -182,7 +187,7 @@ function pauseAnimation() {
     }
 }
 
-// Initialize the map with points for the initial year
-updateMapForYear(currentYear);
+// Initialize the map with points for the initial day
+updateDayDisplay(0);  // Initialize the map to the first day (1935-01-01)
 
 

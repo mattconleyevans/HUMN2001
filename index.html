@@ -340,7 +340,6 @@
         </p>
     </div>
 
-    <!-- Map Container -->
     <div id="map">
         <div class="map-legend">
             <b>Legend</b><br>
@@ -357,10 +356,10 @@
         <div class="controls">
             <button id="playBtn" onclick="playAnimation()">Play</button>
             <button id="pauseBtn" onclick="pauseAnimation()">Pause</button>
-            <input type="range" id="dateSlider" min="1935" max="1960" value="1935" step="1" oninput="updateYearDisplay(this.value)">
+            <input type="range" id="dateSlider" min="0" max="919731600000" value="0" step="86400000" oninput="updateDateDisplay(this.value)">
         </div>
         <div class="year-display">
-            Year: <span id="currentYear">1935</span>
+            Date: <span id="currentDate">1935-01-01</span>
         </div>
     </div>
 
