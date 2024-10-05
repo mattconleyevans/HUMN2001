@@ -1,5 +1,8 @@
 // Initialize the map, centered on Melbourne
-var map = L.map('map').setView([-37.8136, 144.9631], 11.5);
+var map = L.map('map', {
+    scrollWheelZoom: false,  // Disable scroll zoom
+    zoomControl: true  // Keep zoom control buttons enabled
+}).setView([-37.8136, 144.9631], 11.5);
 
 // Add the CartoDB Positron tiles to the map (similar to Folium)
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
