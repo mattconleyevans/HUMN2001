@@ -87,7 +87,7 @@ function addPointToMap(lat, lon, category, row) {
         color: categoryColors[category],
         fillColor: categoryColors[category],
         fillOpacity: 0.8,
-        radius: 3  // Smaller radius
+        radius: 2  // Smaller radius
     }).bindPopup(popupHtml);
 
     // Store markers in an object based on their date for easy removal
