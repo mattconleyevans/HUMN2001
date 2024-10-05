@@ -1189,27 +1189,29 @@
             const hoverBox = document.getElementById('hoverBox');
             hoverBox.classList.add('expanded');  // Expand the hover box
 
-            // Wait a little for the hover box to fully expand before rendering the PDF
+            // Wait for the hover box to fully expand before rendering the PDF
             setTimeout(() => {
                 // Fetch the PDF
                 pdfjsLib.getDocument('data/' + pdfUrl).promise.then(function(pdf) {
                     pdfDoc = pdf;
-                    renderPage(currentPage);
+                    renderPage(currentPage);  // Render the PDF page first
                     createPagination();
+
+                    // Extract the year from the PDF filename
+                    const year = pdfUrl.slice(0, 4);
+
+                    // Check if we have a summary for this year in the CSV
+                    const summary = summaries[year] ? summaries[year].replace(/\n/g, '<br>') : `No summary available for ${year}`;
+
+                    // Update the text content, with line breaks preserved
+                    const hoverText = document.getElementById('hoverText');
+                    hoverText.innerHTML = summary;
+
+                    // Adjust the font size after a small delay to ensure the text is visible
+                    setTimeout(() => {
+                        adjustFontSizeToFit();
+                    }, 100);  // Delay adjustment to make sure text is rendered
                 });
-
-                // Extract the year from the PDF filename
-                const year = pdfUrl.slice(0, 4);
-
-                // Check if we have a summary for this year in the CSV
-                const summary = summaries[year] ? summaries[year].replace(/\n/g, '<br>') : `No summary available for ${year}`;
-
-                // Update the text content, with line breaks preserved
-                const hoverText = document.getElementById('hoverText');
-                hoverText.innerHTML = summary;
-
-                // Adjust the font size dynamically to fit the text within the hover box
-                adjustFontSizeToFit();
             }, 300);  // Adjust delay time as necessary (300ms should give enough time)
         }
 
