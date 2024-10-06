@@ -293,3 +293,82 @@ svg {
 .pagination-circle.active {
     background-color: orange;
 }
+
+.charity-container {
+    display: flex;
+    justify-content: center;  /* Centered on page initially */
+    align-items: center;
+    margin: 50px auto;
+    max-width: 1400px;
+    height: 500px;
+    transition: all 0.5s ease;
+}
+
+.charity-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    width: 25%;
+    height: 100%;
+}
+
+.charity-button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #666;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.charity-button:hover {
+    background-color: #999;
+}
+
+.charity-chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35%;
+    height: 100%;
+    padding: 20px;
+    position: relative;
+}
+
+.charity-blurb {
+    display: none;  /* Hidden initially */
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    padding: 30px;
+    font-size: 18px;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    overflow-y: auto;
+}
+
+.charity-container.with-blurb {
+    justify-content: space-between;  /* Align left to make space for the blurb */
+}
+
+.charity-blurb.show {
+    display: flex;  /* Show the blurb */
+}
+
+.x-axis text {
+    fill: white;
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.x-axis path,
+.x-axis line {
+    stroke: none;
+}
+
+.line {
+    fill: none;
+    stroke-width: 2px;
+}

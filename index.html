@@ -1022,7 +1022,157 @@
             </p>
         </div>
 
+        <div class="charity-container">
+            <div id="charity-buttons" class="charity-buttons"></div>
+            <div id="charity-chart" class="charity-chart"></div>
+            <div id="charity-blurb" class="charity-blurb">
+                <p>Select a charitable organization to see its description.</p>
+            </div>
+        </div>
 
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                d3.csv("data/charities.csv").then(function(data) {
+                    const columns = data.columns.slice(1);  // Skip the first "year" column
+                    const years = data.map(d => +d.year);   // Extract the years for the x-axis
+
+                    let selectedColumn = null;  // No cause selected initially
+                    updateChartAll();  // Show all lines initially
+
+                    // Dynamically create buttons for each organization
+                    const buttonContainer = document.querySelector('.charity-buttons');
+                    columns.forEach(column => {
+                        const button = document.createElement('button');
+                        button.textContent = column;
+                        button.classList.add('charity-button');
+                        button.addEventListener('click', () => {
+                            if (selectedColumn === column) {
+                                // Toggle back to pre-clicked view
+                                selectedColumn = null;
+                                resetToPreClickedView();
+                            } else {
+                                // Set the selected cause and update view
+                                selectedColumn = column;
+                                document.querySelectorAll('.charity-button').forEach(btn => btn.style.backgroundColor = '#666');
+                                button.style.backgroundColor = '#999';
+                                showBlurbAndShiftLayout();
+                                updateChart(selectedColumn);
+                            }
+                        });
+                        buttonContainer.appendChild(button);
+                    });
+
+                    function updateChartAll() {
+                        d3.select('.charity-chart').selectAll('*').remove();  // Clear chart
+
+                        const svg = d3.select('.charity-chart').append('svg')
+                            .attr('width', '100%')
+                            .attr('height', '100%')
+                            .attr('viewBox', '0 0 500 400')
+                            .append('g')
+                            .attr('transform', 'translate(50,30)');
+
+                        const x = d3.scaleLinear()
+                            .domain([1935, 1959])  // Custom range
+                            .range([0, 400]);
+
+                        const y = d3.scaleLinear()
+                            .domain([0, d3.max(columns, col => d3.max(data, d => +d[col]))])
+                            .range([350, 0]);
+
+                        // Plot lines for all organizations
+                        columns.forEach((column, index) => {
+                            const line = d3.line()
+                                .x(d => x(+d.year))
+                                .y(d => y(+d[column]));
+
+                            svg.append('path')
+                                .datum(data)
+                                .attr('class', 'line')
+                                .attr('d', line)
+                                .attr('stroke', d3.schemeCategory10[index]);  // Different color for each org
+                        });
+
+                        // Custom x-axis markers at 1935, 1947, and 1959
+                        const xAxis = d3.axisBottom(x)
+                            .tickValues([1935, 1947, 1959])
+                            .tickFormat(d3.format("d"));
+
+                        svg.append('g')
+                            .attr('class', 'x-axis')
+                            .attr('transform', 'translate(0, 350)')
+                            .call(xAxis);
+                    }
+
+                    function updateChart(selectedColumn) {
+                        // Clear existing chart
+                        d3.select('.charity-chart').selectAll('*').remove();
+
+                        const svg = d3.select('.charity-chart').append('svg')
+                            .attr('width', '100%')
+                            .attr('height', '100%')
+                            .attr('viewBox', '0 0 500 400')
+                            .append('g')
+                            .attr('transform', 'translate(50,30)');
+
+                        const x = d3.scaleLinear()
+                            .domain([1935, 1959])  // Custom range
+                            .range([0, 400]);
+
+                        const y = d3.scaleLinear()
+                            .domain([0, d3.max(data, d => +d[selectedColumn])])
+                            .range([350, 0]);
+
+                        const line = d3.line()
+                            .x(d => x(+d.year))
+                            .y(d => y(+d[selectedColumn]));
+
+                        // Draw line for the selected organization
+                        svg.append('path')
+                            .datum(data)
+                            .attr('class', 'line')
+                            .attr('d', line)
+                            .attr('stroke', d3.schemeCategory10[columns.indexOf(selectedColumn)]);
+
+                        // Custom x-axis markers at 1935, 1947, and 1959
+                        const xAxis = d3.axisBottom(x)
+                            .tickValues([1935, 1947, 1959])
+                            .tickFormat(d3.format("d"));
+
+                        svg.append('g')
+                            .attr('class', 'x-axis')
+                            .attr('transform', 'translate(0, 350)')
+                            .call(xAxis);
+                    }
+
+                    function showBlurbAndShiftLayout() {
+                        const container = document.querySelector('.charity-container');
+                        const blurb = document.querySelector('.charity-blurb');
+                        blurb.classList.add('show');  // Show blurb
+                        container.classList.add('with-blurb');  // Shift layout
+
+                        // Update the blurb content (placeholder for now)
+                        blurb.textContent = `This is the selected cause: ${selectedColumn}. Placeholder text for the description of ${selectedColumn}.`;
+                    }
+
+                    function resetToPreClickedView() {
+                        const container = document.querySelector('.charity-container');
+                        const blurb = document.querySelector('.charity-blurb');
+
+                        // Reset button background color
+                        document.querySelectorAll('.charity-button').forEach(btn => btn.style.backgroundColor = '#666');
+
+                        // Hide blurb and reset layout
+                        blurb.classList.remove('show');
+                        container.classList.remove('with-blurb');
+
+                        // Show all lines again in the chart
+                        updateChartAll();
+                    }
+                });
+            });
+        </script>
 
     </body>
     </html>
