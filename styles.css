@@ -296,7 +296,7 @@ svg {
 
 .charity-container {
     display: flex;
-    justify-content: center;  /* Centered on page initially */
+    justify-content: center;  /* Center elements horizontally */
     align-items: center;
     margin: 50px auto;
     max-width: 1400px;
@@ -304,18 +304,25 @@ svg {
     transition: all 0.5s ease;
 }
 
+.charity-buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+}
+
 .charity-buttons {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    width: 25%;
-    height: 100%;
+    width: 100%;
 }
 
 .charity-button {
     width: 100%;
-    padding: 8px 32px;  /* Added more padding to the left for the icon */
+    padding: 8px 32px;  /* Padding for the icon */
     margin: 5px 0;
     background-color: #666;
     border: none;
@@ -323,7 +330,7 @@ svg {
     color: white;
     font-size: 16px;
     display: flex;
-    justify-content: center;  /* Keep the text centered */
+    justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -340,7 +347,7 @@ svg {
     border-radius: 50%;
     margin-right: 8px;
     position: absolute;
-    left: 10px;  /* Align the icon to the far left */
+    left: 10px;
 }
 
 .charity-chart {
@@ -350,11 +357,10 @@ svg {
     width: 35%;
     height: 100%;
     padding: 20px;
-    position: relative;
 }
 
 .charity-blurb {
-    display: none;  /* Hidden initially */
+    display: none;
     align-items: center;
     width: 30%;
     height: 100%;
@@ -367,11 +373,11 @@ svg {
 }
 
 .charity-container.with-blurb {
-    justify-content: space-between;  /* Align left to make space for the blurb */
+    justify-content: space-between;
 }
 
 .charity-blurb.show {
-    display: flex;  /* Show the blurb */
+    display: flex;
 }
 
 .x-axis text {
@@ -388,4 +394,11 @@ svg {
 .line {
     fill: none;
     stroke-width: 2px;
+}
+
+.charity-title {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 10px;
+    text-align: center;
 }
