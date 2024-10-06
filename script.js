@@ -92,7 +92,6 @@ function addPointToMap(lat, lon, category, row) {
 
     // Store markers in an object based on their date for easy removal
     var eventDate = new Date(row['Date']).getTime();  // Parse date to timestamp
-    console.log(`Adding marker at ${lat}, ${lon} for date ${row['Date']}`);  // Debug log for coordinates
     if (!markers[eventDate]) {
         markers[eventDate] = [];
     }
@@ -113,10 +112,8 @@ function loadCSV(file, category) {
                     if (!isNaN(lat) && !isNaN(lon)) {
                         addPointToMap(lat, lon, category, row);
                     } else {
-                        console.error(`Invalid coordinates: ${row['Coordinates']}`);
                     }
                 } else {
-                    console.error(`Missing coordinates or date in row: ${JSON.stringify(row)}`);
                 }
             });
         }
@@ -147,7 +144,6 @@ function updateMapForDate(date) {
     Object.keys(markers).forEach(function(dateKey) {
         var eventDate = new Date(parseInt(dateKey));
         if (eventDate >= threeYearsAgo && eventDate <= date) {
-            console.log(`Showing marker for event on ${eventDate}`);  // Debug log for date filtering
             markers[dateKey].forEach(function(marker) {
                 marker.addTo(map);
             });
