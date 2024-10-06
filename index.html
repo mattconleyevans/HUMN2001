@@ -1036,16 +1036,26 @@
                 d3.csv("data/charities.csv").then(function(data) {
                     const columns = data.columns.slice(1);  // Skip the first "year" column
                     const years = data.map(d => +d.year);   // Extract the years for the x-axis
+                    const colorScheme = d3.schemeCategory10;  // Color scheme used for both lines and icons
 
                     let selectedColumn = null;  // No cause selected initially
                     updateChartAll();  // Show all lines initially
 
-                    // Dynamically create buttons for each organization
+                    // Dynamically create buttons for each organization with an icon in respective colors
                     const buttonContainer = document.querySelector('.charity-buttons');
-                    columns.forEach(column => {
+                    columns.forEach((column, index) => {
                         const button = document.createElement('button');
                         button.textContent = column;
                         button.classList.add('charity-button');
+                        button.style.backgroundColor = '#666';  // Default grey
+
+                        // Create a small round icon with the respective color
+                        const colorIcon = document.createElement('span');
+                        colorIcon.classList.add('color-icon');
+                        colorIcon.style.backgroundColor = colorScheme[index];  // Set icon color
+
+                        button.prepend(colorIcon);  // Insert icon before the text
+
                         button.addEventListener('click', () => {
                             if (selectedColumn === column) {
                                 // Toggle back to pre-clicked view
@@ -1054,7 +1064,9 @@
                             } else {
                                 // Set the selected cause and update view
                                 selectedColumn = column;
-                                document.querySelectorAll('.charity-button').forEach(btn => btn.style.backgroundColor = '#666');
+                                document.querySelectorAll('.charity-button').forEach((btn, i) => {
+                                    btn.style.backgroundColor = '#666';
+                                });
                                 button.style.backgroundColor = '#999';
                                 showBlurbAndShiftLayout();
                                 updateChart(selectedColumn);
@@ -1091,7 +1103,7 @@
                                 .datum(data)
                                 .attr('class', 'line')
                                 .attr('d', line)
-                                .attr('stroke', d3.schemeCategory10[index]);  // Different color for each org
+                                .attr('stroke', colorScheme[index]);  // Different color for each org
                         });
 
                         // Custom x-axis markers at 1935, 1947, and 1959
@@ -1133,7 +1145,7 @@
                             .datum(data)
                             .attr('class', 'line')
                             .attr('d', line)
-                            .attr('stroke', d3.schemeCategory10[columns.indexOf(selectedColumn)]);
+                            .attr('stroke', colorScheme[columns.indexOf(selectedColumn)]);
 
                         // Custom x-axis markers at 1935, 1947, and 1959
                         const xAxis = d3.axisBottom(x)
@@ -1161,7 +1173,9 @@
                         const blurb = document.querySelector('.charity-blurb');
 
                         // Reset button background color
-                        document.querySelectorAll('.charity-button').forEach(btn => btn.style.backgroundColor = '#666');
+                        document.querySelectorAll('.charity-button').forEach((btn) => {
+                            btn.style.backgroundColor = '#666';
+                        });
 
                         // Hide blurb and reset layout
                         blurb.classList.remove('show');

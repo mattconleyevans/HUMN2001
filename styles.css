@@ -314,16 +314,33 @@ svg {
 }
 
 .charity-button {
-    padding: 10px;
-    font-size: 16px;
+    width: 100%;
+    padding: 8px 32px;  /* Added more padding to the left for the icon */
+    margin: 5px 0;
     background-color: #666;
     border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;  /* Keep the text centered */
+    align-items: center;
     cursor: pointer;
     transition: background-color 0.3s;
+    position: relative;
 }
 
 .charity-button:hover {
     background-color: #999;
+}
+
+.charity-button .color-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    position: absolute;
+    left: 10px;  /* Align the icon to the far left */
 }
 
 .charity-chart {
