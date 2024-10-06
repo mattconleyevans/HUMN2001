@@ -1041,6 +1041,23 @@
                     let selectedColumn = null;  // No cause selected initially
                     updateChartAll();  // Show all lines initially
 
+                    const descriptions = {
+                        "Aid for overseas Jewish communities": `The Australian Jewish community published fundraising appeals to support overseas Jewish communities facing persecution throughout this period.<br><br>In the early 20th century, the Australian Jewish News included many appeals to support Russian, German and Eastern European Jews. These appeals grew in frequency during the early years of the Second World War. Many appeals in the early years of the war were calls for assistance in helping overseas Jews to flee to safer countries, or to sustain themselves after persecution cut off their livelihoods.<br><br>Another spike in such appeals appeared from 1944 onwards, with many of these appeals calling for readers to support Jewish Holocaust survivors and asylum seekers to relocate. Appeals for aid for overseas Jews continued in the 1950s, with many of these appeals turning their attention away from Europe and towards North African and Middle Eastern Jewish communities facing persecution and expulsion.`,
+
+                        "Australian Jewish Welfare and Relief Society": `The Australian Jewish Welfare and Relief Society was a support agency for Jewish pre-war and post-war migrants to Australia. Many were children, some of whom were unaccompanied and were cared for at Frances Barkman House in Melbourne.<br><br>Notices about the AJWS appeared in the Australian Jewish News on occasion for a short period before the Second World War, with the charity providing support for a small number of German, Austrian and Polish Jews who had managed to escape before war broke out. But the intensity of its fundraising and charitable appeals skyrocketed after the war, when Australia saw an influx of Jewish refugees. It was clearly most active between around 1945 and 1948, assisting many Jewish refugees to settle in Australia.`,
+
+                        "Jewish National Fund and other Zionist organisations": `The Jewish National Fund is an organisation founded in 1897 that purchased land for Jewish settlements in the British Mandate of Palestine. By 1948, the JNF owned 54% of the Jewish land in Palestine. This category also includes other Zionist organisations, such as the Jewish Agency for Israel and the World Zionist Organization.<br><br>The Australian Jewish News saw frequent appeals to Australian Jews between 1935 and 1948 to fund the Zionist movement. These appeals declined in frequency during the Second World War, presumably because the community's attention had shifted to the persecution of Jews in Europe, but picked up between 1945 and 1948 as the Zionist movement neared its objective.<br><br>After 1948, once Israel had been established, the JNF's focus shifted to environmental and state-building initiatives in Israel, including afforestation and sustainability projects. These charitable appeals remained frequent in the Australian Jewish News, demonstrating the community's commitment to the Jewish state-building process.`,
+
+                        "Local religious, sporting and cultural institutions": `Like any community newspaper, the Australian Jewish News contained many fundraising appeals for schools, synagogues, sporting groups, and other community initiatives during this period. Particularly frequent organisations in this category include Mount Scopus College, a Jewish day school founded in 1948, the 3rd St Kilda Scout Group, the Jewish sporting organisations AJAX, Hakoah and Maccabi, and various new synagogues and community centres.<br><br>These notices about community organisations skyrocketed after 1948, highlighting the rapid growth of Jewish community life in Melbourne after the Second World War. Many community institutions, including schools, sporting organisations and new congregations, were founded in this period in order to support the growing population of Jewish migrants.`,
+
+                        "United Israel Appeal": `The United Israel Appeal is the primary global fundraising campaign for projects in Israel. It grew out of Zionist organisations like the United Palestine Appeal, Keren Hayesod, and the Jewish Agency for Israel, all of which transitioned from supporting the Zionist project towards other initiatives aimed at addressing Israel's 'national priorities' after Israel's founding.<br><br>The United Israel Appeal focuses on supporting aliyah (Jewish immigration to Israel), building connections between Israel and the global Jewish diaspora, and supporting a range of social welfare initiatives in Israel. Fundraising appeals for the UIA in the Australian Jewish News grew rapidly after Israel's founding and made up the largest single category of appeals by 1959, highlighting the Melbourne Jewish community's strong connection to Israel and its strong interest in supporting the nascent state.`,
+
+                        "Women's International Zionist Organization": `The Women's International Zionist Organization is a global women's volunteer organisation, whose first Melbourne branch was established in 1934. It primarily supports social welfare in Israel and in the Jewish diaspora, with a focus on women's and children's welfare. It has supported education initiatives and maternal and infant health projects.<br><br>WIZO was one of the most prominent charitable organisations in the Australian Jewish News in this period, highlighting the significant role of WIZO and of Jewish women in charitable initiatives during this period. WIZO was one of many women's organisations in this period, with the Hebrew Ladies' Benevolent Society being another example of Jewish women's strong involvement in philanthropy.`,
+
+                        "Youth Aliyah": `Youth Aliyah is an organisation that rescued Jewish children from the Nazi regime during the Second World War, resettling them in youth villages and kibbutzim in the British Mandate of Palestine. The Australian Jewish News saw frequent Youth Aliyah appeals, including the 'Save a Child' campaign, during the Second World War. The organisation continued to attract funding and support after the war, with an additional 15,000 child Holocaust survivors evacuated to Palestine after 1945.<br><br>The Australian Jewish News saw frequent appeals for assistance in evacuating children from Europe and in caring for them upon their arrival in Palestine. The organisation continued to operate youth residential villages after the war, with their efforts primarily focused on caring for newly arrived youth in Israel and for underprivileged Israeli young people.`
+                    };
+
+
                     // Dynamically create buttons for each organization with an icon in respective colors
                     const buttonContainer = document.querySelector('.charity-buttons');
                     columns.forEach((column, index) => {
@@ -1068,7 +1085,7 @@
                                     btn.style.backgroundColor = '#666';
                                 });
                                 button.style.backgroundColor = '#999';
-                                showBlurbAndShiftLayout();
+                                showBlurbAndShiftLayout(column);
                                 updateChart(selectedColumn);
                             }
                         });
@@ -1158,14 +1175,14 @@
                             .call(xAxis);
                     }
 
-                    function showBlurbAndShiftLayout() {
+                    function showBlurbAndShiftLayout(selectedColumn) {
                         const container = document.querySelector('.charity-container');
                         const blurb = document.querySelector('.charity-blurb');
                         blurb.classList.add('show');  // Show blurb
                         container.classList.add('with-blurb');  // Shift layout
 
-                        // Update the blurb content (placeholder for now)
-                        blurb.textContent = `This is the selected cause: ${selectedColumn}. Placeholder text for the description of ${selectedColumn}.`;
+                        // Update the blurb content based on selected charity
+                        blurb.innerHTML = descriptions[selectedColumn] || "Description not available";
                     }
 
                     function resetToPreClickedView() {
