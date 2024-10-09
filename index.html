@@ -366,322 +366,325 @@
     </div>
 
     <!-- Heatmap Container -->
-        <div id="heatmap" style="height: 600px; width: 40%; margin: auto; margin-bottom: 50px;"></div>
+    <div id="heatmap-container" style="width: 40%; margin: auto; margin-bottom: 50px; margin-top: 50px">
+        <div id="heatmap-caption">Click on a point to learn more about the important sites for the Melbourne Jewish community</div>
+        <div id="heatmap" style="height: 600px;"></div>
+    </div>
 
-        <script>
-            // Initialize the heatmap with no interactions (static map)
-            var heatmap = L.map('heatmap', {
-                attributionControl: false,
-                zoomControl: false,
-                dragging: false,
-                scrollWheelZoom: false,
-                doubleClickZoom: false,
-                boxZoom: false,
-                keyboard: false,
-                tap: false,
-                zoomSnap: 0,   // Prevent zoom level snapping
-                zoomDelta: 0,  // No zoom allowed
-                inertia: false,
-                interactive: false  // Disable all interactions
-            }).setView([-37.8136, 144.9631], 11);
+    <script>
+        // Initialize the heatmap with no interactions (static map)
+        var heatmap = L.map('heatmap', {
+            attributionControl: false,
+            zoomControl: false,
+            dragging: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            boxZoom: false,
+            keyboard: false,
+            tap: false,
+            zoomSnap: 0,   // Prevent zoom level snapping
+            zoomDelta: 0,  // No zoom allowed
+            inertia: false,
+            interactive: false  // Disable all interactions
+        }).setView([-37.8136, 144.9631], 11);
 
-            // Add base map tiles without attribution
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png').addTo(heatmap);
+        // Add base map tiles without attribution
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png').addTo(heatmap);
 
-            var heatCoordinates = [];
+        var heatCoordinates = [];
 
-            // Function to load CSV and aggregate coordinates for the heatmap
-            function loadHeatmapData(file) {
-                Papa.parse(file, {
-                    download: true,
-                    header: true,
-                    complete: function(results) {
-                        results.data.forEach(function(row) {
-                            if (row['Coordinates']) {
-                                var coords = row['Coordinates'].split(', ');
-                                var lat = parseFloat(coords[0].trim());
-                                var lon = parseFloat(coords[1].trim());
-                                if (!isNaN(lat) && !isNaN(lon)) {
-                                    heatCoordinates.push([lat, lon, 0.2]); // Slightly reduced intensity
-                                }
+        // Function to load CSV and aggregate coordinates for the heatmap
+        function loadHeatmapData(file) {
+            Papa.parse(file, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    results.data.forEach(function(row) {
+                        if (row['Coordinates']) {
+                            var coords = row['Coordinates'].split(', ');
+                            var lat = parseFloat(coords[0].trim());
+                            var lon = parseFloat(coords[1].trim());
+                            if (!isNaN(lat) && !isNaN(lon)) {
+                                heatCoordinates.push([lat, lon, 0.2]); // Slightly reduced intensity
                             }
-                        });
+                        }
+                    });
 
-                        // Add the heatmap layer once data is loaded
-                        var heatLayer = L.heatLayer(heatCoordinates, {
-                            radius: 7,  // Keep the radius small but precise
-                            blur: 12,   // Slight blur for smoother transitions
-                            maxZoom: 11,  // Same zoom level as the map
-                            gradient: {  // Previous color palette
-                                0.3: '#63a3db',  // Light blue
-                                0.5: '#66cc66',  // Green
-                                0.75: '#ffd700',  // Yellow
-                                0.9: '#f46868'   // Red for the highest density areas
-                            },
-                            max: 1.0,
-                            interactive: false
-                        }).addTo(heatmap);
-                    },
-                    error: function(error) {
-                        console.error('Error loading CSV:', error);
-                    }
-                });
-            }
+                    // Add the heatmap layer once data is loaded
+                    var heatLayer = L.heatLayer(heatCoordinates, {
+                        radius: 7,  // Keep the radius small but precise
+                        blur: 12,   // Slight blur for smoother transitions
+                        maxZoom: 11,  // Same zoom level as the map
+                        gradient: {  // Previous color palette
+                            0.3: '#63a3db',  // Light blue
+                            0.5: '#66cc66',  // Green
+                            0.75: '#ffd700',  // Yellow
+                            0.9: '#f46868'   // Red for the highest density areas
+                        },
+                        max: 1.0,
+                        interactive: false
+                    }).addTo(heatmap);
+                },
+                error: function(error) {
+                    console.error('Error loading CSV:', error);
+                }
+            });
+        }
 
-            // Load all CSVs for the heatmap
-            loadHeatmapData('data/births.csv');
-            loadHeatmapData('data/deaths.csv');
-            loadHeatmapData('data/engagements.csv');
+        // Load all CSVs for the heatmap
+        loadHeatmapData('data/births.csv');
+        loadHeatmapData('data/deaths.csv');
+        loadHeatmapData('data/engagements.csv');
 
-            // Function to generate pop-up HTML
-            function generatePopupHTML(title, imageUrl, text) {
-                return `
+        // Function to generate pop-up HTML
+        function generatePopupHTML(title, imageUrl, text) {
+            return `
+                <div style="display: flex; align-items: center;">
+                <img src="${imageUrl}" style="width: 100px; margin-right: 15px;">
+                <div>
+                    <h4 class="popup-title" style="margin: 0;">${title}</h4>
+                    <p class="blurb-text" style="margin: 0;">${text}</p>
+                </div>
+            </div>
+            `;
+        }
+
+        // Add all prominent circle points with pop-ups (color changed to subtle grey)
+        var mhc = L.circleMarker([-37.835183558841265, 144.976876323271], {
+            radius: 6,
+            color: '#2A6041',   // Subtle grey color
+            fillColor: '#2A6041',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        mhc.bindPopup(generatePopupHTML('Melbourne Hebrew Congregation', 'data/mhc.jpg', 'Placeholder text for MHC'));
+
+        var eastmelb = L.circleMarker([-37.80856093901756, 144.97402273861675], {
+            radius: 6,
+            color: '#2A6041',
+            fillColor: '#2A6041',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        eastmelb.bindPopup(generatePopupHTML('East Melbourne Hebrew Congregation', 'data/emhc.jpg', 'Placeholder text for EMHC'));
+
+        var carlton = L.circleMarker([-37.795657373280726, 144.97003325513077], {
+            radius: 3,
+            color: '#2A6041',
+            fillColor: '#2A6041',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        carlton.bindPopup(generatePopupHTML('Carlton Synagogue', 'data/carlton.jpeg', 'Placeholder text for Carlton Synagogue'));
+
+        var stkilda = L.circleMarker([-37.85933523423765, 144.98528666598537], {
+            radius: 3,
+            color: '#2A6041',
+            fillColor: '#2A6041',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        stkilda.bindPopup(generatePopupHTML('St Kilda Hebrew Congregation', 'data/stkilda.jpg', 'Placeholder text for St Kilda Hebrew Congregation'));
+
+        var bethisrael = L.circleMarker([-37.86029707556212, 144.9909225460374], {
+            radius: 6,
+            color: '#2A6041',
+            fillColor: '#2A6041',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        bethisrael.bindPopup(generatePopupHTML('Temple Beth Israel', 'data/bethisrael.webp', 'Placeholder text for Temple Beth Israel'));
+
+        var elwood = L.circleMarker([-37.87289497354217, 144.98598995767284], {
+            radius: 3,
+            color: '#2A6041',
+            fillColor: '#2A6041',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        elwood.bindPopup(generatePopupHTML('Elwood Synagogue', 'data/elwood.jpg', 'Placeholder text for Elwood Synagogue'));
+
+        var adass = L.circleMarker([-37.86849132178424, 144.98708760000002], {
+            radius: 3,
+            color: '#2A6041',
+            fillColor: '#2A6041',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        adass.bindPopup(generatePopupHTML('Adass Israel', 'data/adassisrael.jpg', 'Placeholder text for Adass Israel'));
+
+        var caulfield = L.circleMarker([-37.86739027808721, 145.01135536672518], {
+            radius: 3,
+            color: '#2A6041',
+            fillColor: '#2A6041',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        caulfield.bindPopup(generatePopupHTML('Caulfield Hebrew Congregation', 'data/caulfield.jpg', 'Placeholder text for Caulfield Hebrew Congregation'));
+
+        var kew = L.circleMarker([-37.80200747431732, 145.03199325559146], {
+            radius: 3,
+            color: '#2A6041',
+            fillColor: '#2A6041',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        kew.bindPopup(generatePopupHTML('Kew Hebrew Congregation', 'data/kew.jpg', 'Placeholder text for Kew Hebrew Congregation'));
+
+        var scopus = L.circleMarker([-37.8348753278297, 144.97423904952282], {
+            radius: 3,
+            color: '#8A3B12',
+            fillColor: '#8A3B12',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        scopus.bindPopup(generatePopupHTML('Mount Scopus Memorial College', 'data/scopus.jpg', 'Placeholder text for Mount Scopus Memorial College'));
+
+        var scopus2 = L.circleMarker([-37.84966771263717, 145.11663367043477], {
+            radius: 3,
+            color: '#8A3B12',
+            fillColor: '#8A3B12',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        scopus2.bindPopup(generatePopupHTML('Mount Scopus Memorial College (New site)', 'data/scopus2.jpg', 'Placeholder text for Mount Scopus Memorial College (new site)'));
+
+        var bialik = L.circleMarker([-37.842131088947035, 145.04450096672392], {
+            radius: 3,
+            color: '#8A3B12',
+            fillColor: '#8A3B12',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        bialik.bindPopup(generatePopupHTML('Bialik College', 'data/bialik.jpg', 'Placeholder text for Bialik College'));
+
+        var sholem = L.circleMarker([-37.88238841600461, 145.0014078826051], {
+            radius: 3,
+            color: '#8A3B12',
+            fillColor: '#8A3B12',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        sholem.bindPopup(generatePopupHTML('Sholem Aleichem College', 'data/sholem.jpg', 'Placeholder text for Sholem Aleichem College'));
+
+        var bethrivkah = L.circleMarker([-37.86933365201541, 145.00090529741686], {
+            radius: 3,
+            color: '#8A3B12',
+            fillColor: '#8A3B12',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        bethrivkah.bindPopup(generatePopupHTML('Beth Rivkah Ladies College', 'data/bethrivkah.jpeg', 'Placeholder text for Beth Rivkah College'));
+
+        var yeshivah = L.circleMarker([-37.86746754832805, 145.00032300112707], {
+            radius: 3,
+            color: '#8A3B12',
+            fillColor: '#8A3B12',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        yeshivah.bindPopup(generatePopupHTML('Yeshivah College', 'data/yeshivah.jpg', 'Placeholder text for Yeshivah College'));
+
+        var communitycentre = L.circleMarker([-37.88461752059016, 145.02210439999996], {
+            radius: 3,
+            color: '#6A4C93',
+            fillColor: '#6A4C93',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        communitycentre.bindPopup(generatePopupHTML('Beth Weizmann Jewish Community Centre', 'data/communitycentre.jpg', 'Placeholder text for Beth Weizmann Jewish Community Centre'));
+
+        var kadimah = L.circleMarker([-37.8828625480735, 145.00112551534582], {
+            radius: 3,
+            color: '#6A4C93',
+            fillColor: '#6A4C93',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        kadimah.bindPopup(generatePopupHTML('Kadimah Jewish Cultural Centre and National Library', 'data/kadimah.jpg', 'Placeholder text for Kadimah Jewish Cultural Centre and National Library'));
+
+        var ajax = L.circleMarker([-37.85308723789374, 144.97171108465417], {
+            radius: 3,
+            color: '#6A4C93',
+            fillColor: '#6A4C93',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        ajax.bindPopup(generatePopupHTML('AJAX Football Club', 'data/ajax.jpg', 'AJAX Football Club'));
+
+        var jws = L.circleMarker([-37.852905302102435, 144.98268318392556], {
+            radius: 3,
+            color: '#6A4C93',
+            fillColor: '#6A4C93',
+            fillOpacity: 0.9,
+            weight: 2
+        }).addTo(heatmap);
+
+        jws.bindPopup(generatePopupHTML('Jewish Welfare Society', 'data/jws.png', 'Jewish Welfare Society (now Jewish Care)'));
+
+        // Disable all map interactions (make static)
+        heatmap.dragging.disable();
+        heatmap.touchZoom.disable();
+        heatmap.doubleClickZoom.disable();
+        heatmap.scrollWheelZoom.disable();
+        heatmap.boxZoom.disable();
+        heatmap.keyboard.disable();
+
+        // Add a legend for "Synagogue"
+        var legend = L.control({ position: 'bottomleft' });
+
+        legend.onAdd = function () {
+            var div = L.DomUtil.create('div', 'map-legend');
+            div.innerHTML = `
+                <div style="background-color: rgba(255, 255, 255, 0.8); padding: 8px; border-radius: 5px;">
                     <div style="display: flex; align-items: center;">
-                    <img src="${imageUrl}" style="width: 100px; margin-right: 15px;">
-                    <div>
-                        <h4 class="popup-title" style="margin: 0;">${title}</h4>
-                        <p class="blurb-text" style="margin: 0;">${text}</p>
+                        <div style="width: 12px; height: 12px; background-color: #2A6041; border-radius: 50%; margin-right: 8px;"></div>
+                        <span>Synagogue</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 12px; height: 12px; background-color: #8A3B12; border-radius: 50%; margin-right: 8px;"></div>
+                        <span>School</span>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 12px; height: 12px; background-color: #6A4C93; border-radius: 50%; margin-right: 8px;"></div>
+                        <span>Community Centres and Other</span>
                     </div>
                 </div>
-                `;
-            }
+            `;
+            return div;
+        };
 
-            // Add all prominent circle points with pop-ups (color changed to subtle grey)
-            var mhc = L.circleMarker([-37.835183558841265, 144.976876323271], {
-                radius: 6,
-                color: '#2A6041',   // Subtle grey color
-                fillColor: '#2A6041',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
+        legend.addTo(heatmap);
+    </script>
 
-            mhc.bindPopup(generatePopupHTML('Melbourne Hebrew Congregation', 'data/mhc.jpg', 'Placeholder text for MHC'));
+    <div class="content">
+        <p>As one might expect, the Jewish community largely lived in close proximity to Jewish schools and synagogues. For some, this is for religious reasons; many observant Jews live in close proximity and within walking distance of a synagogue in order to attend services on Shabbat when other modes of transport are prohibited under religious law. For others, the clustering in a small area was likely for cultural and familial reasons.</p>
+        <p>Many of the Jewish institutions in the south-eastern suburbs, such as Mount Scopus College and several of the smaller synagogues, opened during the war or in the post-war period in order to accommodate growing Jewish migration to suburbs like Elwood and St Kilda. Meanwhile, the Carlton Synagogue was demolished in 1970 and Bialik College’s North Carlton campus was moved to Hawthorn after the Jewish population in the northern suburbs declined (Carlton Heritage Review, 2019). The Melbourne Hebrew Congregation and the East Melbourne Hebrew Congregation are Melbourne’s oldest synagogues and were both constructed when there was a larger Jewish population in their surrounding areas, but clearly had lower Jewish population density by the mid-20th century given the community’s shift towards neighbouring suburbs like St Kilda and Caulfield (Melbourne Hebrew Congregation, n.d.). </p>
+    </div>
 
-            var eastmelb = L.circleMarker([-37.80856093901756, 144.97402273861675], {
-                radius: 6,
-                color: '#2A6041',
-                fillColor: '#2A6041',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
+    <h2 class = "sub">How immigration transformed the Melbourne Jewish community</h2>
 
-            eastmelb.bindPopup(generatePopupHTML('East Melbourne Hebrew Congregation', 'data/emhc.jpg', 'Placeholder text for EMHC'));
-
-            var carlton = L.circleMarker([-37.795657373280726, 144.97003325513077], {
-                radius: 3,
-                color: '#2A6041',
-                fillColor: '#2A6041',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            carlton.bindPopup(generatePopupHTML('Carlton Synagogue', 'data/carlton.jpeg', 'Placeholder text for Carlton Synagogue'));
-
-            var stkilda = L.circleMarker([-37.85933523423765, 144.98528666598537], {
-                radius: 3,
-                color: '#2A6041',
-                fillColor: '#2A6041',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            stkilda.bindPopup(generatePopupHTML('St Kilda Hebrew Congregation', 'data/stkilda.jpg', 'Placeholder text for St Kilda Hebrew Congregation'));
-
-            var bethisrael = L.circleMarker([-37.86029707556212, 144.9909225460374], {
-                radius: 6,
-                color: '#2A6041',
-                fillColor: '#2A6041',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            bethisrael.bindPopup(generatePopupHTML('Temple Beth Israel', 'data/bethisrael.webp', 'Placeholder text for Temple Beth Israel'));
-
-            var elwood = L.circleMarker([-37.87289497354217, 144.98598995767284], {
-                radius: 3,
-                color: '#2A6041',
-                fillColor: '#2A6041',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            elwood.bindPopup(generatePopupHTML('Elwood Synagogue', 'data/elwood.jpg', 'Placeholder text for Elwood Synagogue'));
-
-            var adass = L.circleMarker([-37.86849132178424, 144.98708760000002], {
-                radius: 3,
-                color: '#2A6041',
-                fillColor: '#2A6041',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            adass.bindPopup(generatePopupHTML('Adass Israel', 'data/adassisrael.jpg', 'Placeholder text for Adass Israel'));
-
-            var caulfield = L.circleMarker([-37.86739027808721, 145.01135536672518], {
-                radius: 3,
-                color: '#2A6041',
-                fillColor: '#2A6041',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            caulfield.bindPopup(generatePopupHTML('Caulfield Hebrew Congregation', 'data/caulfield.jpg', 'Placeholder text for Caulfield Hebrew Congregation'));
-
-            var kew = L.circleMarker([-37.80200747431732, 145.03199325559146], {
-                radius: 3,
-                color: '#2A6041',
-                fillColor: '#2A6041',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            kew.bindPopup(generatePopupHTML('Kew Hebrew Congregation', 'data/kew.jpg', 'Placeholder text for Kew Hebrew Congregation'));
-
-            var scopus = L.circleMarker([-37.8348753278297, 144.97423904952282], {
-                radius: 3,
-                color: '#8A3B12',
-                fillColor: '#8A3B12',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            scopus.bindPopup(generatePopupHTML('Mount Scopus Memorial College', 'data/scopus.jpg', 'Placeholder text for Mount Scopus Memorial College'));
-
-            var scopus2 = L.circleMarker([-37.84966771263717, 145.11663367043477], {
-                radius: 3,
-                color: '#8A3B12',
-                fillColor: '#8A3B12',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            scopus2.bindPopup(generatePopupHTML('Mount Scopus Memorial College (New site)', 'data/scopus2.jpg', 'Placeholder text for Mount Scopus Memorial College (new site)'));
-
-            var bialik = L.circleMarker([-37.842131088947035, 145.04450096672392], {
-                radius: 3,
-                color: '#8A3B12',
-                fillColor: '#8A3B12',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            bialik.bindPopup(generatePopupHTML('Bialik College', 'data/bialik.jpg', 'Placeholder text for Bialik College'));
-
-            var sholem = L.circleMarker([-37.88238841600461, 145.0014078826051], {
-                radius: 3,
-                color: '#8A3B12',
-                fillColor: '#8A3B12',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            sholem.bindPopup(generatePopupHTML('Sholem Aleichem College', 'data/sholem.jpg', 'Placeholder text for Sholem Aleichem College'));
-
-            var bethrivkah = L.circleMarker([-37.86933365201541, 145.00090529741686], {
-                radius: 3,
-                color: '#8A3B12',
-                fillColor: '#8A3B12',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            bethrivkah.bindPopup(generatePopupHTML('Beth Rivkah Ladies College', 'data/bethrivkah.jpeg', 'Placeholder text for Beth Rivkah College'));
-
-            var yeshivah = L.circleMarker([-37.86746754832805, 145.00032300112707], {
-                radius: 3,
-                color: '#8A3B12',
-                fillColor: '#8A3B12',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            yeshivah.bindPopup(generatePopupHTML('Yeshivah College', 'data/yeshivah.jpg', 'Placeholder text for Yeshivah College'));
-
-            var communitycentre = L.circleMarker([-37.88461752059016, 145.02210439999996], {
-                radius: 3,
-                color: '#6A4C93',
-                fillColor: '#6A4C93',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            communitycentre.bindPopup(generatePopupHTML('Beth Weizmann Jewish Community Centre', 'data/communitycentre.jpg', 'Placeholder text for Beth Weizmann Jewish Community Centre'));
-
-            var kadimah = L.circleMarker([-37.8828625480735, 145.00112551534582], {
-                radius: 3,
-                color: '#6A4C93',
-                fillColor: '#6A4C93',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            kadimah.bindPopup(generatePopupHTML('Kadimah Jewish Cultural Centre and National Library', 'data/kadimah.jpg', 'Placeholder text for Kadimah Jewish Cultural Centre and National Library'));
-
-            var ajax = L.circleMarker([-37.85308723789374, 144.97171108465417], {
-                radius: 3,
-                color: '#6A4C93',
-                fillColor: '#6A4C93',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            ajax.bindPopup(generatePopupHTML('AJAX Football Club', 'data/ajax.jpg', 'AJAX Football Club'));
-
-            var jws = L.circleMarker([-37.852905302102435, 144.98268318392556], {
-                radius: 3,
-                color: '#6A4C93',
-                fillColor: '#6A4C93',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            jws.bindPopup(generatePopupHTML('Jewish Welfare Society', 'data/jws.png', 'Jewish Welfare Society (now Jewish Care)'));
-
-            // Disable all map interactions (make static)
-            heatmap.dragging.disable();
-            heatmap.touchZoom.disable();
-            heatmap.doubleClickZoom.disable();
-            heatmap.scrollWheelZoom.disable();
-            heatmap.boxZoom.disable();
-            heatmap.keyboard.disable();
-
-            // Add a legend for "Synagogue"
-            var legend = L.control({ position: 'bottomleft' });
-
-            legend.onAdd = function () {
-                var div = L.DomUtil.create('div', 'map-legend');
-                div.innerHTML = `
-                    <div style="background-color: rgba(255, 255, 255, 0.8); padding: 8px; border-radius: 5px;">
-                        <div style="display: flex; align-items: center;">
-                            <div style="width: 12px; height: 12px; background-color: #2A6041; border-radius: 50%; margin-right: 8px;"></div>
-                            <span>Synagogue</span>
-                        </div>
-                        <div style="display: flex; align-items: center;">
-                            <div style="width: 12px; height: 12px; background-color: #8A3B12; border-radius: 50%; margin-right: 8px;"></div>
-                            <span>School</span>
-                        </div>
-                        <div style="display: flex; align-items: center;">
-                            <div style="width: 12px; height: 12px; background-color: #6A4C93; border-radius: 50%; margin-right: 8px;"></div>
-                            <span>Community Centres and Other</span>
-                        </div>
-                    </div>
-                `;
-                return div;
-            };
-
-            legend.addTo(heatmap);
-        </script>
-
-        <div class="content">
-            <p>As one might expect, the Jewish community largely lived in close proximity to Jewish schools and synagogues. For some, this is for religious reasons; many observant Jews live in close proximity and within walking distance of a synagogue in order to attend services on Shabbat when other modes of transport are prohibited under religious law. For others, the clustering in a small area was likely for cultural and familial reasons.</p>
-            <p>Many of the Jewish institutions in the south-eastern suburbs, such as Mount Scopus College and several of the smaller synagogues, opened during the war or in the post-war period in order to accommodate growing Jewish migration to suburbs like Elwood and St Kilda. Meanwhile, the Carlton Synagogue was demolished in 1970 and Bialik College’s North Carlton campus was moved to Hawthorn after the Jewish population in the northern suburbs declined (Carlton Heritage Review, 2019). The Melbourne Hebrew Congregation and the East Melbourne Hebrew Congregation are Melbourne’s oldest synagogues and were both constructed when there was a larger Jewish population in their surrounding areas, but clearly had lower Jewish population density by the mid-20th century given the community’s shift towards neighbouring suburbs like St Kilda and Caulfield (Melbourne Hebrew Congregation, n.d.). </p>
-        </div>
-
-        <h2 class = "sub">How immigration transformed the Melbourne Jewish community</h2>
-
-        <div class = "content">
-            <p>Alongside the community’s shift to suburbs like Caulfield, immigration profoundly transformed the Jewish community during this period. While the Australian Jewish News does not provide much direct information about the nations of origin of Melbourne’s Jewish community, the surnames mentioned in the family announcements reflect the national origins of the Jewish population of Melbourne in this period and can be used to better understand who made the up the Jewish community. These surnames can be compared to those used in The Australian Israelite, an earlier Jewish newspaper published in Melbourne between 1871 and 1875, to explore how the national origins of Melbourne’s Jewish community had changed by the 1930s.</p>
-        </div>
+    <div class = "content">
+        <p>Alongside the community’s shift to suburbs like Caulfield, immigration profoundly transformed the Jewish community during this period. While the Australian Jewish News does not provide much direct information about the nations of origin of Melbourne’s Jewish community, the surnames mentioned in the family announcements reflect the national origins of the Jewish population of Melbourne in this period and can be used to better understand who made the up the Jewish community. These surnames can be compared to those used in The Australian Israelite, an earlier Jewish newspaper published in Melbourne between 1871 and 1875, to explore how the national origins of Melbourne’s Jewish community had changed by the 1930s.</p>
+    </div>
 
     <!-- Word Clouds Side by Side -->
     <div class="word-cloud-container">

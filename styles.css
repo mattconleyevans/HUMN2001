@@ -451,7 +451,7 @@ svg {
 }
 
 .charity-title {
-    font-size: 14px;
+    font-size: 16px;
     color: #ccc;
     margin-bottom: 10px;
     text-align: center;
@@ -476,4 +476,17 @@ a:hover {
     font-size: 14px; /* Set this as small as desired */
     opacity: 0.8;    /* Slight opacity if you want it softer */
     line-height: 1.2;
+}
+
+#heatmap-container {
+    position: relative;
+}
+
+#heatmap-caption {
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: bold;
+    position: absolute;
+    top: -20px;  /* Adjust this to create space above the heatmap */
+    left: 0;     /* Align with the heatmap's left edge */
 }
