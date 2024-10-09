@@ -13,6 +13,35 @@ body, html {
     text-align: center;  /* Center the text */
 }
 
+.title-background {
+    background-image: url('data/1957.jpg');
+    background-size: cover;
+    background-position: center top; /* Centers the image at the top */
+    background-repeat: no-repeat;
+    padding: 50px 20px; /* Adjust padding as needed */
+    color: white;
+    text-align: center;
+    position: relative;
+    margin-bottom: 100px;
+}
+
+.title-background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Black overlay for fade effect */
+    z-index: 1;
+}
+
+.title-background h1,
+.title-background h2 {
+    position: relative;
+    z-index: 2; /* Bring text above the background overlay */
+}
+
 h1 {
     font-size: 48px;
     font-weight: bold;
@@ -35,16 +64,40 @@ h3 {
     font-size: 18px;
     text-align: center;
     margin-top: 10px;
+    margin-bottom: 100px;
     font-weight: normal;
     z-index: 10000;
     position: relative;
 }
 
-.content {
-    max-width: 900px;
-    margin: 50px auto;
-    padding: 20px;
+.sub {
+    font-size: 36px; /* Larger for prominence */
+    font-weight: 900; /* Extra bold */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
     text-align: center;
+    margin-top: 50px; /* Significant space from preceding content */
+    margin-bottom: 20px; /* Closer to content below */
+    color: #ffffff; /* Consistent with site theme */
+    z-index: 10000;
+    position: relative;
+}
+
+.quote {
+    font-size: 24px; /* Large font size */
+    font-style: italic; /* Italicized for quote effect */
+    color: rgba(255, 255, 255, 0.7); /* Slight opacity for subtlety */
+    text-align: center; /* Centered on the page */
+    max-width: 1200px; /* Optional: constrains width for readability */
+    margin: 10px auto; /* Space around the quote */
+    line-height: 1.4; /* Comfortable line spacing */
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0px auto;
+    padding: 5px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 #map {
@@ -240,7 +293,8 @@ svg {
     width: 80%;
     margin: auto;
     position: relative;
-    padding-bottom: 20px;
+    padding-bottom: 70px;
+    padding-top: 50px;
 }
 
 .timeline {
@@ -401,4 +455,25 @@ svg {
     color: #ccc;
     margin-bottom: 10px;
     text-align: center;
+}
+
+a {
+    color: #add8e6; /* Light blue color */
+    text-decoration: none; /* Remove underline if desired */
+}
+
+a:hover {
+    color: #b0e0e6; /* Slightly lighter shade on hover */
+    text-decoration: underline; /* Optional: add underline on hover */
+}
+
+.popup-title {
+    font-size: 16px; /* Adjust as needed */
+    font-weight: bold;
+}
+
+.blurb-text {
+    font-size: 14px; /* Set this as small as desired */
+    opacity: 0.8;    /* Slight opacity if you want it softer */
+    line-height: 1.2;
 }

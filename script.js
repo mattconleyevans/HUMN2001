@@ -2,9 +2,9 @@
 var map = L.map('map', {
     scrollWheelZoom: false,  // Disable scroll zoom
     zoomControl: true,
-    zoomSnap: 0.01,          // Allow finer control over zoom (fractional zooms)
-    zoomDelta: 0.01          // Set the smallest zoom increment// Keep zoom control buttons enabled
-}).setView([-37.8506, 144.9631], 11.3);
+    zoomSnap: 0.5,          // Allow finer control over zoom (fractional zooms)
+    zoomDelta: 0.5          // Set the smallest zoom increment// Keep zoom control buttons enabled
+}).setView([-37.8506, 144.9631], 11.5);
 
 // Add the CartoDB Positron tiles to the map (similar to Folium)
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -172,6 +172,14 @@ function animateMapByDay() {
 // Function to start the animation
 function playAnimation() {
     if (!timer) {
+        // Reset currentDate to the start
+        currentDate = new Date(startDate);
+        document.getElementById('dateSlider').value = currentDate.getTime();
+
+        // Update the map and display for the initial date
+        updateDateDisplay(currentDate.getTime());
+
+        // Start the animation
         timer = setInterval(animateMapByDay, 0.5);  // Adjust speed (~1 year per second)
     }
 }

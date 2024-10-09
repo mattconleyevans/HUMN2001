@@ -27,704 +27,30 @@
 
 </head>
 <body>
+    <div class = "title-background">
+        <h1>Melbourne Jewry during the Second World War</h1>
+        <h2>Using the Australian Jewish News to map Jewish life in Melbourne, 1935-1960</h2>
+        <h3>HUMN2001 Final Project - Matthew Conley-Evans (u7117029)</h3>
+    </div>
 
-    <!-- Title and Subtitle -->
-    <h1>Melbourne Jewry during the Second World War</h1>
-    <h2>Using the Australian Jewish News to map Jewish life in Melbourne, 1935-1960</h2>
-    <h3>HUMN2001 Final Project - Matthew Conley-Evans (u7117029)</h3>
-
-    <!-- Placeholder Content Above the Map -->
+    <h2 class = "sub">Introduction</h2>
     <div class="content">
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit quam nec lacus placerat,
-            id elementum libero pharetra. Curabitur at venenatis nisl, et vulputate felis. Fusce posuere tellus
-            id nisl pharetra, nec eleifend lectus tempor. Nulla facilisi. Suspendisse potenti. Duis tristique nunc
-            vel augue commodo, nec interdum libero scelerisque. Pellentesque ullamcorper nunc vitae felis auctor,
-            et tristique nisl scelerisque.
+            The period between 1935 and 1960 was a transformative time for the Australian Jewish community and for the global Jewish diaspora. This period saw widespread persecution of Jews in Europe, as well as a surge in Jewish migration to Australia and the establishment of the State of Israel. The events of this period have profoundly shaped modern Jewish culture and identity. This project uses the Australian Jewish News, one of Australia’s longest-running and highest-circulation Jewish newspapers, to shed greater light on everyday life for Melbourne’s Jewish community during this period.
         </p>
     </div>
 
-    <div id="map">
-        <div class="map-legend">
-            <b>Legend</b><br>
-            <i style="color: #63a3db;">&#9679;</i> Birth<br>
-            <i style="color: #f46868;">&#9679;</i> Death<br>
-            <i style="color: #66cc66;">&#9679;</i> Marriage<br>
-            <i style="color: #ffd700;">&#9679;</i> Bar Mitzvah<br>
-            <i style="color: #d8b0ff;">&#9679;</i> Engagement<br>
-        </div>
-    </div>
-
-    <!-- Date Controls Below the Map -->
-    <div class="date-controls">
-        <div class="controls">
-            <button id="playBtn" onclick="playAnimation()">Play</button>
-            <button id="pauseBtn" onclick="pauseAnimation()">Pause</button>
-            <input type="range" id="dateSlider" min="0" max="919731600000" value="0" step="86400000" oninput="updateDateDisplay(this.value)">
-        </div>
-        <div class="year-display">
-            Date: <span id="currentDate">1935-01-01</span>
-        </div>
-    </div>
-
-    <!-- Placeholder Content Below the Map -->
+    <h2 class = "sub">Literature Review</h2>
     <div class="content">
-        <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-    </div>
+        <p>The period between 1935 and 1960 saw both the slaughter of approximately a third of the global Jewish population, and the establishment of a Jewish state in the community’s ancestral homeland. The Holocaust profoundly transformed the Jewish community, decimating Yiddish language and culture (Schwartz, 2015), causing psychological and spiritual trauma for many in the community, and intensifying support for the Zionist cause (Friesel, 1996). The resulting establishment of the State of Israel in 1948 was a defining event for the Jewish community, which had for centuries evoked the notion of a future ‘return to Zion’ in prayer and cultural memory (Gilbert, 1978). The nascent State of Israel quickly became a focal point for Jewish identity, culture and religion, including in the Australian Jewish diaspora (Rutland, 2006).</p>
 
-    <!-- Heatmap Container -->
-        <div id="heatmap" style="height: 600px; width: 40%; margin: auto; margin-bottom: 50px;"></div>
+        <p>This period also saw a rapid growth of the Australian Jewish community. Australia has been home to Jews ever since the First Fleet arrived with around sixteen Jewish convicts in 1788 (Rutland, 2008). The early Jewish community in Australia was largely composed of British Jews, many of them employed as shopkeepers (Rutland, 1988). Some Russian and Polish Jews arrived from the 1890s onwards after fleeing pogroms, and a number of German Jews settled in Australia in the inter-war period after the Nazis took power in Germany (Shyovitz & Bard, n.d.). But it was after the Second World War that the Australian Jewish population began to grow rapidly in size. Many Holocaust survivors settled in Australia, along with a new Sephardic community originating from the Iberian Peninsula (Gale, 1994). In the late 1950s, Mizrahi Jews from Egypt and elsewhere began to enter Australia, having previously been barred under the White Australia policy (Stratton, 1996). These waves of post-war immigration saw a tripling of the Australian Jewish population between 1938 and 1961 and greatly increased the Australian Jewish community’s cultural and religious diversity (Rutland, 2006).</p>
 
-        <script>
-            // Initialize the heatmap with no interactions (static map)
-            var heatmap = L.map('heatmap', {
-                attributionControl: false,
-                zoomControl: false,
-                dragging: false,
-                scrollWheelZoom: false,
-                doubleClickZoom: false,
-                boxZoom: false,
-                keyboard: false,
-                tap: false,
-                zoomSnap: 0,   // Prevent zoom level snapping
-                zoomDelta: 0,  // No zoom allowed
-                inertia: false,
-                interactive: false  // Disable all interactions
-            }).setView([-37.8136, 144.9631], 11);
+        <p>The post-war period also saw the establishment of many of the key religious, social and cultural organisations of Australian Jewish life. Melbourne’s Jewish community established new synagogues, schools, community centres, and sporting clubs to accommodate the new migrant populations (Burstin, 1967). Melbourne’s Jewish population eventually became highly concentrated around the suburbs of Caulfield North and St Kilda East, establishing new schools, synagogues and sporting clubs in these suburbs.</p>
 
-            // Add base map tiles without attribution
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png').addTo(heatmap);
+        <p>The 1930s also saw the founding of many Jewish newspapers, including the Australian Jewish News, which contain a rich historical record of the Jewish community in Australia (Rutland, 1995). Researchers have used the Jewish press to study historical debates over Zionism and antisemitism, and to study key moments in Australian Jewish history. For instance, Max Kaiser has drawn extensively on the Australian Jewish press in research studying Jewish antifascism of the 1940s and 1950s (Kaiser, 2018; Kaiser, 2020). The Australian Jewish Historical Society Journal has also published a series of short articles by various authors that use the Jewish press to capture a snapshot of the community at various points in the past (see Rubinstein, 2021; Freeman, 2019).</p>
 
-            var heatCoordinates = [];
-
-            // Function to load CSV and aggregate coordinates for the heatmap
-            function loadHeatmapData(file) {
-                Papa.parse(file, {
-                    download: true,
-                    header: true,
-                    complete: function(results) {
-                        results.data.forEach(function(row) {
-                            if (row['Coordinates']) {
-                                var coords = row['Coordinates'].split(', ');
-                                var lat = parseFloat(coords[0].trim());
-                                var lon = parseFloat(coords[1].trim());
-                                if (!isNaN(lat) && !isNaN(lon)) {
-                                    heatCoordinates.push([lat, lon, 0.2]); // Slightly reduced intensity
-                                }
-                            }
-                        });
-
-                        // Add the heatmap layer once data is loaded
-                        var heatLayer = L.heatLayer(heatCoordinates, {
-                            radius: 7,  // Keep the radius small but precise
-                            blur: 12,   // Slight blur for smoother transitions
-                            maxZoom: 11,  // Same zoom level as the map
-                            gradient: {  // Previous color palette
-                                0.3: '#63a3db',  // Light blue
-                                0.5: '#66cc66',  // Green
-                                0.75: '#ffd700',  // Yellow
-                                0.9: '#f46868'   // Red for the highest density areas
-                            },
-                            max: 1.0,
-                            interactive: false
-                        }).addTo(heatmap);
-                    },
-                    error: function(error) {
-                        console.error('Error loading CSV:', error);
-                    }
-                });
-            }
-
-            // Load all CSVs for the heatmap
-            loadHeatmapData('data/births.csv');
-            loadHeatmapData('data/deaths.csv');
-            loadHeatmapData('data/engagements.csv');
-
-            // Function to generate pop-up HTML
-            function generatePopupHTML(title, imageUrl, text) {
-                return `
-                    <div style="display: flex; align-items: center;">
-                        <img src="${imageUrl}" style="width: 100px; margin-right: 15px;">
-                        <div style="font-size: 14px;">
-                            <h4 style="margin: 0;">${title}</h4>
-                            <p style="margin: 0;">${text}</p>
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Add all prominent circle points with pop-ups (color changed to subtle grey)
-            var mhc = L.circleMarker([-37.835183558841265, 144.976876323271], {
-                radius: 7,
-                color: '#808080',   // Subtle grey color
-                fillColor: '#808080',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            mhc.bindPopup(generatePopupHTML('Melbourne Hebrew Congregation', 'data/mhc.jpg', 'Placeholder text for MHC'));
-
-            var eastmelb = L.circleMarker([-37.80856093901756, 144.97402273861675], {
-                radius: 7,
-                color: '#808080',
-                fillColor: '#808080',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            eastmelb.bindPopup(generatePopupHTML('East Melbourne Hebrew Congregation', 'data/emhc.jpg', 'Placeholder text for EMHC'));
-
-            var carlton = L.circleMarker([-37.795657373280726, 144.97003325513077], {
-                radius: 4,
-                color: '#808080',
-                fillColor: '#808080',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            carlton.bindPopup(generatePopupHTML('Carlton Synagogue', 'data/carlton.jpeg', 'Placeholder text for Carlton Synagogue'));
-
-            var stkilda = L.circleMarker([-37.85933523423765, 144.98528666598537], {
-                radius: 4,
-                color: '#808080',
-                fillColor: '#808080',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            stkilda.bindPopup(generatePopupHTML('St Kilda Hebrew Congregation', 'data/stkilda.jpg', 'Placeholder text for St Kilda Hebrew Congregation'));
-
-            var bethisrael = L.circleMarker([-37.86029707556212, 144.9909225460374], {
-                radius: 7,
-                color: '#808080',
-                fillColor: '#808080',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            bethisrael.bindPopup(generatePopupHTML('Temple Beth Israel', 'data/bethisrael.webp', 'Placeholder text for Temple Beth Israel'));
-
-            var elwood = L.circleMarker([-37.87289497354217, 144.98598995767284], {
-                radius: 4,
-                color: '#808080',
-                fillColor: '#808080',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            elwood.bindPopup(generatePopupHTML('Elwood Synagogue', 'data/elwood.jpg', 'Placeholder text for Elwood Synagogue'));
-
-            var adass = L.circleMarker([-37.86849132178424, 144.98708760000002], {
-                radius: 4,
-                color: '#808080',
-                fillColor: '#808080',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            adass.bindPopup(generatePopupHTML('Adass Israel', 'data/adassisrael.jpg', 'Placeholder text for Adass Israel'));
-
-            var caulfield = L.circleMarker([-37.86739027808721, 145.01135536672518], {
-                radius: 4,
-                color: '#808080',
-                fillColor: '#808080',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            caulfield.bindPopup(generatePopupHTML('Caulfield Hebrew Congregation', 'data/caulfield.jpg', 'Placeholder text for Caulfield Hebrew Congregation'));
-
-            var kew = L.circleMarker([-37.80200747431732, 145.03199325559146], {
-                radius: 4,
-                color: '#808080',
-                fillColor: '#808080',
-                fillOpacity: 0.9,
-                weight: 2
-            }).addTo(heatmap);
-
-            kew.bindPopup(generatePopupHTML('Kew Hebrew Congregation', 'data/kew.jpg', 'Placeholder text for Kew Hebrew Congregation'));
-
-            // Disable all map interactions (make static)
-            heatmap.dragging.disable();
-            heatmap.touchZoom.disable();
-            heatmap.doubleClickZoom.disable();
-            heatmap.scrollWheelZoom.disable();
-            heatmap.boxZoom.disable();
-            heatmap.keyboard.disable();
-
-            // Add a legend for "Synagogue"
-            var legend = L.control({ position: 'bottomleft' });
-
-            legend.onAdd = function () {
-                var div = L.DomUtil.create('div', 'map-legend');
-                div.innerHTML = `
-                    <div style="background-color: rgba(255, 255, 255, 0.8); padding: 8px; border-radius: 5px;">
-                        <div style="display: flex; align-items: center;">
-                            <div style="width: 12px; height: 12px; background-color: #808080; border-radius: 50%; margin-right: 8px;"></div>
-                            <span>Synagogue</span>
-                        </div>
-                    </div>
-                `;
-                return div;
-            };
-
-            legend.addTo(heatmap);
-        </script>
-
-        <div class="content">
-            <p>
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </div>
-
-    <!-- Word Clouds Side by Side -->
-    <div class="word-cloud-container">
-        <div class="cloud">
-            <div class="title">1870s</div>
-            <div id="cloud-1870"></div>
-        </div>
-        <div class="cloud">
-            <div class="title">1930s</div>
-            <div id="cloud-1930"></div>
-        </div>
-    </div>
-
-    <script>
-        // Load CSV data and filter by time periods
-        d3.csv("data/surnames.csv").then(function(data) {
-
-            // Get top 15 surnames for 1870-1880 period
-            const surnames1870 = getTopSurnames(data, 1870, 1880);
-
-            // Get top 15 surnames for 1930-1945 period
-            const surnames1930 = getTopSurnames(data, 1930, 1939);
-
-            // Create both word clouds once when scrolling reaches trigger point
-            let cloudsCreated = false;  // Ensure we don't create them multiple times
-
-            window.addEventListener('scroll', () => {
-                const scrollPos = window.scrollY;
-                const triggerHeight = window.innerHeight / 2;
-
-                if (scrollPos > triggerHeight && !cloudsCreated) {
-                    createWordCloud("#cloud-1870", surnames1870);
-                    createWordCloud("#cloud-1930", surnames1930);
-                    cloudsCreated = true;  // Ensure it only triggers once
-                }
-            });
-        });
-
-        // Function to get top 15 surnames for a given period
-        function getTopSurnames(data, startYear, endYear) {
-            // Filter data for the specific time range
-            const filteredData = data.filter(d => +d.year >= startYear && +d.year <= endYear);
-
-            // Aggregate counts by surname
-            const surnameCounts = {};
-            filteredData.forEach(d => {
-                const surname = d.surnames;  // Use correct "surnames" column
-                const count = +d.count;
-
-                if (surnameCounts[surname]) {
-                    surnameCounts[surname] += count;
-                } else {
-                    surnameCounts[surname] = count;
-                }
-            });
-
-            // Convert aggregated counts to an array of objects
-            const aggregatedSurnames = Object.keys(surnameCounts).map(surname => {
-                return { text: surname, size: surnameCounts[surname] };
-            });
-
-            // Sort by count and take the top 15 surnames
-            return aggregatedSurnames
-                .sort((a, b) => b.size - a.size)
-                .slice(0, 15);
-        }
-
-        // Function to create a word cloud
-        function createWordCloud(containerId, words) {
-            const maxCount = d3.max(words, d => d.size);  // Find max size for normalization
-
-            const layout = d3.layout.cloud()
-                .size([500, 400])
-                .words(words.map(d => Object.create(d)))
-                .padding(5)
-                .rotate(d => (d.size > 30 ? 0 : ~~(Math.random() * 2) * 90))  // Larger names horizontal, smaller ones may be vertical
-                .font("Roboto")
-                .fontSize(d => (d.size / maxCount) * 100)  // Normalize font size
-                .on("end", draw);
-
-            layout.start();
-
-            function draw(words) {
-                const svg = d3.select(containerId).append("svg")
-                    .attr("width", layout.size()[0])
-                    .attr("height", layout.size()[1])
-                    .append("g")
-                    .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")");
-
-                const text = svg.selectAll("text")
-                    .data(words)
-                    .enter().append("text")
-                    .style("font-size", d => d.size + "px")
-                    .style("fill", (d, i) => d3.interpolateBlues(i / 10))  // Softer, toned-down colors
-                    .attr("text-anchor", "middle")
-                    .attr("transform", d => "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")")
-                    .text(d => d.text)
-                    .style("opacity", 0);  // Start with 0 opacity
-
-                // Animate the words appearing one by one
-                text.transition()
-                    .delay((d, i) => i * 300)
-                    .duration(800)
-                    .style("opacity", 1);
-            }
-        }
-    </script>
-
-    <div class="content">
-        <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-    </div>
-
-    <!-- New Animated Plot -->
-    <div class="line-chart" id="line-chart"></div>
-
-    <!-- Placeholder Text After the Plot -->
-    <div class="content">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec suscipit quam nec lacus placerat, id elementum libero pharetra.
-        </p>
-    </div>
-
-    <script src="script.js"></script>
-
-    <script>
-        // Set up SVG and margins
-        var margin = {top: 20, right: 150, bottom: 30, left: 60},  // Increase right margin for label space
-            width = 800 - margin.left - margin.right,  // Increase total width to allow room for labels
-            height = 450 - margin.top - margin.bottom;
-
-        var svg = d3.select("#line-chart").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        // Data
-        var data = [
-            {label: "Bernstein", values: [0.009006, 0.029132]},
-            {label: "Waxman", values: [0.008335, 0.025862]},
-            {label: "Goldsmith", values: [0.005076, 0.011976]},
-            {label: "Kraetzer", values: [0.005076, 0.016667]},
-            {label: "Rosenfeld", values: [0.005939, 0.020977]}
-        ];
-
-        // X and Y scales
-        var x = d3.scalePoint()
-            .domain(["1870s", "1930s"])
-            .range([0, width]);
-
-        var y = d3.scaleLinear()
-            .domain([0, 0.03])
-            .range([height, 0]);
-
-        // Line generator
-        var line = d3.line()
-            .x(function (d, i) {
-                return x(i === 0 ? "1870s" : "1930s");
-            })
-            .y(function (d) {
-                return y(d);
-            });
-
-        // Colors
-        var color = d3.scaleOrdinal()
-            .domain(data.map(function (d) {
-                return d.label;
-            }))
-            .range(["#FF6F61", "#6B5B95", "#88B04B", "#ffd700", "#63a3db"]);  // Softer, varied colors
-
-        // Plot lines
-        data.forEach(function (d) {
-            var path = svg.append("path")
-                .datum(d.values)
-                .attr("fill", "none")
-                .attr("stroke", color(d.label))
-                .attr("stroke-width", 2)
-                .attr("d", line)
-                .attr("stroke-dasharray", function () {
-                    var totalLength = this.getTotalLength();
-                    return totalLength + " " + totalLength;
-                })
-                .attr("stroke-dashoffset", function () {
-                    return this.getTotalLength();
-                });
-
-            // Animate line on scroll
-            window.addEventListener('scroll', function () {
-                var chartPosition = svg.node().getBoundingClientRect();
-                if (chartPosition.top < window.innerHeight && chartPosition.bottom >= 0) {
-                    path.transition()
-                        .duration(2000)
-                        .attr("stroke-dashoffset", 0);
-                }
-            });
-
-            // Add round points at each end of the line
-            svg.selectAll(".dot")
-                .data(d.values)
-                .enter().append("circle")
-                .attr("cx", function(d, i) { return x(i === 0 ? "1870s" : "1930s"); })
-                .attr("cy", function(d) { return y(d); })
-                .attr("r", 5)
-                .attr("fill", color(d.label));
-
-            // Labels right next to the points
-            svg.append("text")
-                .attr("x", width + 5)  // Place label close to the point
-                .attr("y", y(d.values[1]))  // Align with the last point
-                .attr("dy", ".35em")
-                .attr("fill", color(d.label))
-                .style("font-size", "22px")
-                .style("font-weight", "bold")
-                .text(d.label);
-            });
-
-            svg.append("text")
-                .attr("x", -60)
-                .attr("y", y(0.005))  // Correctly use 0.005 for "0.5%"
-                .attr("dy", ".35em")
-                .attr("fill", "white")
-                .style("font-size", "16px")
-                .style("opacity", 0.7)  // Subtle effect
-                .text("0.5%");
-
-            svg.append("text")
-                .attr("x", -60)
-                .attr("y", y(0.025))  // Correctly use 0.025 for "2.5%"
-                .attr("dy", ".35em")
-                .attr("fill", "white")
-                .style("font-size", "16px")
-                .style("opacity", 0.7)  // Subtle effect
-                .text("2.5%");
-
-            svg.append("text")
-                .attr("x", x("1870s"))
-                .attr("y", height + 30)
-                .attr("fill", "white")
-                .style("font-size", "16px")
-                .style("opacity", 0.7)  // Subtle effect
-                .style("text-anchor", "middle")
-                .text("1870s");
-
-            svg.append("text")
-                .attr("x", x("1930s"))
-                .attr("y", height + 30)
-                .attr("fill", "white")
-                .style("font-size", "16px")
-                .style("opacity", 0.7)  // Subtle effect
-                .style("text-anchor", "middle")
-                .text("1930s");
-
-        // Minimal X and Y axis
-        svg.append("g")
-            .attr("class", "minimal-axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).ticks(2));
-
-        svg.append("g")
-            .attr("class", "minimal-axis")
-            .call(d3.axisLeft(y).ticks(3));
-    </script>
-
-    <!-- Area Chart Container -->
-    <div class="area-chart-container">
-        <svg class="area-svg" width="800" height="400"></svg>
-        <div class="area-legend"></div>
-    </div>
-
-    <script>
-        // Load the data from the CSV file
-        d3.csv("data/topics.csv").then(function(data) {
-            // Parse the data
-            data.forEach(function(d) {
-                d.Year = +d.Year;
-                d.Frequency = +d.Frequency;
-            });
-
-            // Filter out data after 1959
-            data = data.filter(d => d.Year <= 1959);
-
-            // Group the data by Year and aggregate the Frequency by Topic
-            const topics = Array.from(new Set(data.map(d => d.Topic)));
-            const dataByYear = Array.from(d3.rollup(
-                data,
-                values => {
-                    const result = { Year: values[0].Year };  // Initialize with the year
-                    topics.forEach(topic => {
-                        result[topic] = d3.sum(values.filter(v => v.Topic === topic), d => d.Frequency) || 0;
-                    });
-                    return result;
-                },
-                d => d.Year
-            ), ([, value]) => value);
-
-            // Create the stack layout
-            const stack = d3.stack()
-                .keys(topics)
-                .order(d3.stackOrderNone)
-                .offset(d3.stackOffsetNone);
-
-            const stackedData = stack(dataByYear);
-
-            // Create an area chart based on the frequency of each topic by year
-            const svg = d3.select(".area-svg"),
-                  width = +svg.attr("width"),
-                  height = +svg.attr("height"),
-                  margin = { top: 20, right: 50, bottom: 40, left: 50 };
-
-            // X scale: Years (keep max at 1960, even though no data after 1959)
-            const x = d3.scaleLinear()
-                .domain([d3.min(data, d => d.Year), 1960])
-                .range([margin.left, width - margin.right]);
-
-            // Y scale: Cumulative frequencies
-            const y = d3.scaleLinear()
-                .domain([0, d3.max(stackedData, layer => d3.max(layer, d => d[1])) * 1.1])
-                .range([height - margin.bottom, margin.top]);
-
-            const color = d3.scaleOrdinal(d3.schemeCategory10)
-                .domain(topics);
-
-            // Add the shaded region for the Second World War (1939-1945) **BEHIND the area plot**
-            svg.append("rect")
-                .attr("x", x(1939))
-                .attr("y", margin.top)
-                .attr("width", x(1945) - x(1939))  // Width is from 1939 to 1945
-                .attr("height", height - margin.top - margin.bottom)
-                .attr("fill", "rgba(150, 150, 150, 0.3)");  // Subtle shaded area
-
-            // Define the area generator for stacked data
-            const area = d3.area()
-                .x(d => x(d.data.Year))
-                .y0(d => y(d[0]))
-                .y1(d => y(d[1]))
-                .curve(d3.curveMonotoneX);  // Smooth curve
-
-            // Add the stacked areas for each topic
-            svg.selectAll(".area")
-                .data(stackedData)
-                .enter().append("path")
-                .attr("class", "area")
-                .attr("fill", d => color(d.key))
-                .attr("d", area)
-                .style("opacity", 0)  // Start with 0 opacity for animation
-                .transition()  // Gradually fill in on scroll
-                .duration(2000)
-                .delay((d, i) => i * 200)
-                .style("opacity", 1);
-
-            // Add the x-axis
-            svg.append("g")
-                .attr("class", "area-axis")
-                .attr("transform", `translate(0, ${height - margin.bottom})`)
-                .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));  // Subtle x-axis with year labels
-
-            // Add the legend
-            const legend = d3.select(".area-legend");
-            topics.forEach(function(topic) {
-                const legendItem = legend.append("div").attr("class", "area-legend-item");
-                legendItem.append("div")
-                    .attr("class", "area-legend-color-box")
-                    .style("background-color", color(topic));
-                legendItem.append("span").text(topic);
-            });
-
-            // Add label for "Second World War" **aligned vertically with the Israel label**
-            const labelYPosition = margin.top + 20;  // Set the same y position for both labels
-
-            // Label for "Second World War"
-            svg.append("text")
-                .attr("x", (x(1939) + x(1945)) / 2)  // Center label between 1939 and 1945
-                .attr("y", labelYPosition)
-                .attr("text-anchor", "middle")
-                .attr("fill", "white")
-                .text("Second World War");
-
-            // Add vertical line for the Founding of Israel (1948)
-            svg.append("line")
-                .attr("x1", x(1948))
-                .attr("x2", x(1948))
-                .attr("y1", margin.top)
-                .attr("y2", height - margin.bottom)
-                .attr("stroke", "rgba(255, 255, 255, 0.7)")
-                .attr("stroke-width", 2)
-                .attr("stroke-dasharray", "4,4");  // Dashed line
-
-            // Add label for "Founding of Israel" **aligned with the war label**
-            svg.append("text")
-                .attr("x", x(1948) + 5)  // Slightly offset from the line
-                .attr("y", labelYPosition)  // Same y position as the "Second World War" label
-                .attr("text-anchor", "start")
-                .attr("fill", "white")
-                .text("Founding of Israel");
-
-            svg.append("text")
-                .attr("x", width - margin.right - 5)  // Positioned near the right edge
-                .attr("y", height + margin.bottom - 42)  // Adjust position to stay above the axis
-                .attr("text-anchor", "end")  // Align text to the right
-                .attr("fill", "white")
-                .style("font-size", "12px")
-                .style("opacity", 0.7)
-                .style("pointer-events", "none")  // Ensure it doesn't interfere with other elements
-                .text("*Publication of the AJN was more infrequent in 1953");
-
-        });
-    </script>
-
-
-    <div class="content">
-        <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        <p>But this existing research has largely employed close reading of notable articles or issues of the Jewish press, using this close reading to study particular points in time rather than analysing broader trends in the community. Furthermore, much of this existing research exclusively uses editorial content, such as articles, rather than incorporating non-editorial content like advertising, social news, family notices, and so on. This project thus aims to fill these gaps in existing research by using digital humanities techniques to explore the ways in which the Melbourne Jewish community moved and changed between 1935 and 1960, as reflected in the Australian Jewish News. The project also makes use of many of the parts of newspapers traditionally viewed as less historically significant — such as family notices, community news, and charitable fundraising appeals — to shed greater light on everyday life for members of the community in this period.</p>
     </div>
 
     <div class="timeline-container">
@@ -732,7 +58,7 @@
         <div class="hover-box" id="hoverBox">
             <canvas id="pdfViewer"></canvas> <!-- PDF display area -->
             <div class="hover-text">
-                <p id="hoverText">Click on a year to see a summary of the first July issue of the AJN in that year.</p>
+                <p id="hoverText">Click on a year to explore a summary of the first July issue of the AJN in that year.</p>
             </div>
             <div class="pdf-pagination" id="pagination"></div> <!-- Pagination circles inside the hover box -->
         </div>
@@ -994,33 +320,775 @@
 
         </script>
 
-        <div class="content">
-            <p>
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class = "content">
+        <p>This project aims to address the research question: </p>
+    </div>
 
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class = "quote">What does the Australian Jewish News reveal about how the day-to-day lives and concerns of members of the Melbourne Jewish community evolved in the period surrounding the Second World War?</div>
 
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class = "content">
+        <p>In answering this research question, the project addresses three thematic areas: first, where the community lived and worshipped, second, how immigration changed the composition of the Jewish community, and finally, what the Jewish community discussed and cared about during this period.</p>
+    </div>
 
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+    <h2 class = "sub">Where Melbourne's Jewish community lived and worshipped</h2>
+
+    <div class = "content">
+        <p>While Melbourne’s Jewish community today is highly concentrated in St Kilda and Caulfield, this was not always the case. The Australian Jewish News can be used to explore how the geography of Melbourne’s Jewish community changed between 1935 and 1960. In order to visualise this shift in geography, a dataset of 13,912 family announcements — births, deaths, marriages, engagements, bar mitzvahs, and so on — published in the Australian Jewish News between 1935 and 1960 was first obtained from the National Library of Australia’s Trove digital archive. Most notices of births, deaths and engagements contained the address at which the family lived, while the notices of marriages and bar mitzvahs contained the locations of the synagogues at which families worshipped, allowing for an approximation of the community’s residences and places of worship to be mapped over time. These notices were processed using generative AI to turn the unstructured texts into structured, machine-readable data, and then overlaid on a map of Melbourne. </p>
+    </div>
+
+    <div id="map">
+        <div class="map-legend">
+            <b>Legend</b><br>
+            <i style="color: #63a3db;">&#9679;</i> Birth<br>
+            <i style="color: #f46868;">&#9679;</i> Death<br>
+            <i style="color: #66cc66;">&#9679;</i> Marriage<br>
+            <i style="color: #ffd700;">&#9679;</i> Bar Mitzvah<br>
+            <i style="color: #d8b0ff;">&#9679;</i> Engagement<br>
         </div>
+    </div>
+
+    <!-- Date Controls Below the Map -->
+    <div class="date-controls">
+        <div class="controls">
+            <button id="playBtn" onclick="playAnimation()">Play</button>
+            <button id="pauseBtn" onclick="pauseAnimation()">Pause</button>
+            <input type="range" id="dateSlider" min="0" max="919731600000" value="0" step="86400000" oninput="updateDateDisplay(this.value)">
+        </div>
+        <div class="year-display">
+            Date: <span id="currentDate">1935-01-01</span>
+        </div>
+    </div>
+
+    <!-- Placeholder Content Below the Map -->
+    <div class="content">
+        <p>This map shows that in 1935, Melbourne’s Jewish community was relatively evenly spread between the northern and south-eastern suburbs, with significant Jewish communities surrounding both Carlton and St Kilda. But the community shifted south of the river after the war, with most points in the late 1950s appearing around St Kilda, Caulfield and Elwood. The community also spread out as Melbourne expanded in this period, with some Jewish families moving to more outer suburbs like Brighton and Moorabbin.</p>
+        <p>We can also explore where families lived in relation to synagogues and other key Jewish sites. The map below shows a heatmap of engagements, births and deaths — which serve as proxies for where Jewish families lived — in the Jewish community between 1935 and 1960, with synagogues and other important Jewish sites like schools and community centres overlaid onto the map. </p>
+    </div>
+
+    <!-- Heatmap Container -->
+        <div id="heatmap" style="height: 600px; width: 40%; margin: auto; margin-bottom: 50px;"></div>
+
+        <script>
+            // Initialize the heatmap with no interactions (static map)
+            var heatmap = L.map('heatmap', {
+                attributionControl: false,
+                zoomControl: false,
+                dragging: false,
+                scrollWheelZoom: false,
+                doubleClickZoom: false,
+                boxZoom: false,
+                keyboard: false,
+                tap: false,
+                zoomSnap: 0,   // Prevent zoom level snapping
+                zoomDelta: 0,  // No zoom allowed
+                inertia: false,
+                interactive: false  // Disable all interactions
+            }).setView([-37.8136, 144.9631], 11);
+
+            // Add base map tiles without attribution
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png').addTo(heatmap);
+
+            var heatCoordinates = [];
+
+            // Function to load CSV and aggregate coordinates for the heatmap
+            function loadHeatmapData(file) {
+                Papa.parse(file, {
+                    download: true,
+                    header: true,
+                    complete: function(results) {
+                        results.data.forEach(function(row) {
+                            if (row['Coordinates']) {
+                                var coords = row['Coordinates'].split(', ');
+                                var lat = parseFloat(coords[0].trim());
+                                var lon = parseFloat(coords[1].trim());
+                                if (!isNaN(lat) && !isNaN(lon)) {
+                                    heatCoordinates.push([lat, lon, 0.2]); // Slightly reduced intensity
+                                }
+                            }
+                        });
+
+                        // Add the heatmap layer once data is loaded
+                        var heatLayer = L.heatLayer(heatCoordinates, {
+                            radius: 7,  // Keep the radius small but precise
+                            blur: 12,   // Slight blur for smoother transitions
+                            maxZoom: 11,  // Same zoom level as the map
+                            gradient: {  // Previous color palette
+                                0.3: '#63a3db',  // Light blue
+                                0.5: '#66cc66',  // Green
+                                0.75: '#ffd700',  // Yellow
+                                0.9: '#f46868'   // Red for the highest density areas
+                            },
+                            max: 1.0,
+                            interactive: false
+                        }).addTo(heatmap);
+                    },
+                    error: function(error) {
+                        console.error('Error loading CSV:', error);
+                    }
+                });
+            }
+
+            // Load all CSVs for the heatmap
+            loadHeatmapData('data/births.csv');
+            loadHeatmapData('data/deaths.csv');
+            loadHeatmapData('data/engagements.csv');
+
+            // Function to generate pop-up HTML
+            function generatePopupHTML(title, imageUrl, text) {
+                return `
+                    <div style="display: flex; align-items: center;">
+                    <img src="${imageUrl}" style="width: 100px; margin-right: 15px;">
+                    <div>
+                        <h4 class="popup-title" style="margin: 0;">${title}</h4>
+                        <p class="blurb-text" style="margin: 0;">${text}</p>
+                    </div>
+                </div>
+                `;
+            }
+
+            // Add all prominent circle points with pop-ups (color changed to subtle grey)
+            var mhc = L.circleMarker([-37.835183558841265, 144.976876323271], {
+                radius: 6,
+                color: '#2A6041',   // Subtle grey color
+                fillColor: '#2A6041',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            mhc.bindPopup(generatePopupHTML('Melbourne Hebrew Congregation', 'data/mhc.jpg', 'Placeholder text for MHC'));
+
+            var eastmelb = L.circleMarker([-37.80856093901756, 144.97402273861675], {
+                radius: 6,
+                color: '#2A6041',
+                fillColor: '#2A6041',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            eastmelb.bindPopup(generatePopupHTML('East Melbourne Hebrew Congregation', 'data/emhc.jpg', 'Placeholder text for EMHC'));
+
+            var carlton = L.circleMarker([-37.795657373280726, 144.97003325513077], {
+                radius: 3,
+                color: '#2A6041',
+                fillColor: '#2A6041',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            carlton.bindPopup(generatePopupHTML('Carlton Synagogue', 'data/carlton.jpeg', 'Placeholder text for Carlton Synagogue'));
+
+            var stkilda = L.circleMarker([-37.85933523423765, 144.98528666598537], {
+                radius: 3,
+                color: '#2A6041',
+                fillColor: '#2A6041',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            stkilda.bindPopup(generatePopupHTML('St Kilda Hebrew Congregation', 'data/stkilda.jpg', 'Placeholder text for St Kilda Hebrew Congregation'));
+
+            var bethisrael = L.circleMarker([-37.86029707556212, 144.9909225460374], {
+                radius: 6,
+                color: '#2A6041',
+                fillColor: '#2A6041',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            bethisrael.bindPopup(generatePopupHTML('Temple Beth Israel', 'data/bethisrael.webp', 'Placeholder text for Temple Beth Israel'));
+
+            var elwood = L.circleMarker([-37.87289497354217, 144.98598995767284], {
+                radius: 3,
+                color: '#2A6041',
+                fillColor: '#2A6041',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            elwood.bindPopup(generatePopupHTML('Elwood Synagogue', 'data/elwood.jpg', 'Placeholder text for Elwood Synagogue'));
+
+            var adass = L.circleMarker([-37.86849132178424, 144.98708760000002], {
+                radius: 3,
+                color: '#2A6041',
+                fillColor: '#2A6041',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            adass.bindPopup(generatePopupHTML('Adass Israel', 'data/adassisrael.jpg', 'Placeholder text for Adass Israel'));
+
+            var caulfield = L.circleMarker([-37.86739027808721, 145.01135536672518], {
+                radius: 3,
+                color: '#2A6041',
+                fillColor: '#2A6041',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            caulfield.bindPopup(generatePopupHTML('Caulfield Hebrew Congregation', 'data/caulfield.jpg', 'Placeholder text for Caulfield Hebrew Congregation'));
+
+            var kew = L.circleMarker([-37.80200747431732, 145.03199325559146], {
+                radius: 3,
+                color: '#2A6041',
+                fillColor: '#2A6041',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            kew.bindPopup(generatePopupHTML('Kew Hebrew Congregation', 'data/kew.jpg', 'Placeholder text for Kew Hebrew Congregation'));
+
+            var scopus = L.circleMarker([-37.8348753278297, 144.97423904952282], {
+                radius: 3,
+                color: '#8A3B12',
+                fillColor: '#8A3B12',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            scopus.bindPopup(generatePopupHTML('Mount Scopus Memorial College', 'data/scopus.jpg', 'Placeholder text for Mount Scopus Memorial College'));
+
+            var scopus2 = L.circleMarker([-37.84966771263717, 145.11663367043477], {
+                radius: 3,
+                color: '#8A3B12',
+                fillColor: '#8A3B12',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            scopus2.bindPopup(generatePopupHTML('Mount Scopus Memorial College (New site)', 'data/scopus2.jpg', 'Placeholder text for Mount Scopus Memorial College (new site)'));
+
+            var bialik = L.circleMarker([-37.842131088947035, 145.04450096672392], {
+                radius: 3,
+                color: '#8A3B12',
+                fillColor: '#8A3B12',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            bialik.bindPopup(generatePopupHTML('Bialik College', 'data/bialik.jpg', 'Placeholder text for Bialik College'));
+
+            var sholem = L.circleMarker([-37.88238841600461, 145.0014078826051], {
+                radius: 3,
+                color: '#8A3B12',
+                fillColor: '#8A3B12',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            sholem.bindPopup(generatePopupHTML('Sholem Aleichem College', 'data/sholem.jpg', 'Placeholder text for Sholem Aleichem College'));
+
+            var bethrivkah = L.circleMarker([-37.86933365201541, 145.00090529741686], {
+                radius: 3,
+                color: '#8A3B12',
+                fillColor: '#8A3B12',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            bethrivkah.bindPopup(generatePopupHTML('Beth Rivkah Ladies College', 'data/bethrivkah.jpeg', 'Placeholder text for Beth Rivkah College'));
+
+            var yeshivah = L.circleMarker([-37.86746754832805, 145.00032300112707], {
+                radius: 3,
+                color: '#8A3B12',
+                fillColor: '#8A3B12',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            yeshivah.bindPopup(generatePopupHTML('Yeshivah College', 'data/yeshivah.jpg', 'Placeholder text for Yeshivah College'));
+
+            var communitycentre = L.circleMarker([-37.88461752059016, 145.02210439999996], {
+                radius: 3,
+                color: '#6A4C93',
+                fillColor: '#6A4C93',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            communitycentre.bindPopup(generatePopupHTML('Beth Weizmann Jewish Community Centre', 'data/communitycentre.jpg', 'Placeholder text for Beth Weizmann Jewish Community Centre'));
+
+            var kadimah = L.circleMarker([-37.8828625480735, 145.00112551534582], {
+                radius: 3,
+                color: '#6A4C93',
+                fillColor: '#6A4C93',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            kadimah.bindPopup(generatePopupHTML('Kadimah Jewish Cultural Centre and National Library', 'data/kadimah.jpg', 'Placeholder text for Kadimah Jewish Cultural Centre and National Library'));
+
+            var ajax = L.circleMarker([-37.85308723789374, 144.97171108465417], {
+                radius: 3,
+                color: '#6A4C93',
+                fillColor: '#6A4C93',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            ajax.bindPopup(generatePopupHTML('AJAX Football Club', 'data/ajax.jpg', 'AJAX Football Club'));
+
+            var jws = L.circleMarker([-37.852905302102435, 144.98268318392556], {
+                radius: 3,
+                color: '#6A4C93',
+                fillColor: '#6A4C93',
+                fillOpacity: 0.9,
+                weight: 2
+            }).addTo(heatmap);
+
+            jws.bindPopup(generatePopupHTML('Jewish Welfare Society', 'data/jws.png', 'Jewish Welfare Society (now Jewish Care)'));
+
+            // Disable all map interactions (make static)
+            heatmap.dragging.disable();
+            heatmap.touchZoom.disable();
+            heatmap.doubleClickZoom.disable();
+            heatmap.scrollWheelZoom.disable();
+            heatmap.boxZoom.disable();
+            heatmap.keyboard.disable();
+
+            // Add a legend for "Synagogue"
+            var legend = L.control({ position: 'bottomleft' });
+
+            legend.onAdd = function () {
+                var div = L.DomUtil.create('div', 'map-legend');
+                div.innerHTML = `
+                    <div style="background-color: rgba(255, 255, 255, 0.8); padding: 8px; border-radius: 5px;">
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background-color: #2A6041; border-radius: 50%; margin-right: 8px;"></div>
+                            <span>Synagogue</span>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background-color: #8A3B12; border-radius: 50%; margin-right: 8px;"></div>
+                            <span>School</span>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background-color: #6A4C93; border-radius: 50%; margin-right: 8px;"></div>
+                            <span>Community Centres and Other</span>
+                        </div>
+                    </div>
+                `;
+                return div;
+            };
+
+            legend.addTo(heatmap);
+        </script>
+
+        <div class="content">
+            <p>As one might expect, the Jewish community largely lived in close proximity to Jewish schools and synagogues. For some, this is for religious reasons; many observant Jews live in close proximity and within walking distance of a synagogue in order to attend services on Shabbat when other modes of transport are prohibited under religious law. For others, the clustering in a small area was likely for cultural and familial reasons.</p>
+            <p>Many of the Jewish institutions in the south-eastern suburbs, such as Mount Scopus College and several of the smaller synagogues, opened during the war or in the post-war period in order to accommodate growing Jewish migration to suburbs like Elwood and St Kilda. Meanwhile, the Carlton Synagogue was demolished in 1970 and Bialik College’s North Carlton campus was moved to Hawthorn after the Jewish population in the northern suburbs declined (Carlton Heritage Review, 2019). The Melbourne Hebrew Congregation and the East Melbourne Hebrew Congregation are Melbourne’s oldest synagogues and were both constructed when there was a larger Jewish population in their surrounding areas, but clearly had lower Jewish population density by the mid-20th century given the community’s shift towards neighbouring suburbs like St Kilda and Caulfield (Melbourne Hebrew Congregation, n.d.). </p>
+        </div>
+
+        <h2 class = "sub">How immigration transformed the Melbourne Jewish community</h2>
+
+        <div class = "content">
+            <p>Alongside the community’s shift to suburbs like Caulfield, immigration profoundly transformed the Jewish community during this period. While the Australian Jewish News does not provide much direct information about the nations of origin of Melbourne’s Jewish community, the surnames mentioned in the family announcements reflect the national origins of the Jewish population of Melbourne in this period and can be used to better understand who made the up the Jewish community. These surnames can be compared to those used in The Australian Israelite, an earlier Jewish newspaper published in Melbourne between 1871 and 1875, to explore how the national origins of Melbourne’s Jewish community had changed by the 1930s.</p>
+        </div>
+
+    <!-- Word Clouds Side by Side -->
+    <div class="word-cloud-container">
+        <div class="cloud">
+            <div class="title">1870s</div>
+            <div id="cloud-1870"></div>
+        </div>
+        <div class="cloud">
+            <div class="title">1930s</div>
+            <div id="cloud-1930"></div>
+        </div>
+        <div class="cloud">
+            <div class="title">1950s</div>
+            <div id="cloud-1950"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            d3.csv("data/surnames.csv").then(function(data) {
+                const surnames1870 = getTopSurnames(data, 1870, 1880);
+                const surnames1930 = getTopSurnames(data, 1930, 1939);
+                const surnames1950 = getTopSurnames(data, 1950, 1959);
+
+                let cloudsCreated = false; // Ensure we don't create them multiple times
+                const cloudContainer = document.querySelector("#cloud-1870"); // Use the first cloud as a reference point
+
+                window.addEventListener('scroll', () => {
+                    if (cloudsCreated) return;
+
+                    const triggerHeight = cloudContainer.getBoundingClientRect().top - window.innerHeight * 0.8; // Trigger sooner
+
+                    if (triggerHeight < 0) {
+                        createWordCloud("#cloud-1870", surnames1870);
+                        createWordCloud("#cloud-1930", surnames1930);
+                        createWordCloud("#cloud-1950", surnames1950);
+                        cloudsCreated = true;
+                    }
+                });
+            });
+
+            function getTopSurnames(data, startYear, endYear) {
+                const filteredData = data.filter(d => +d.year >= startYear && +d.year <= endYear);
+                const surnameCounts = {};
+
+                filteredData.forEach(d => {
+                    const surname = d.surnames;
+                    const count = +d.count;
+
+                    surnameCounts[surname] = (surnameCounts[surname] || 0) + count;
+                });
+
+                return Object.keys(surnameCounts)
+                    .map(surname => ({ text: surname, size: surnameCounts[surname] }))
+                    .sort((a, b) => b.size - a.size)
+                    .slice(0, 15);
+            }
+
+            function createWordCloud(containerId, words) {
+                const maxCount = d3.max(words, d => d.size);
+
+                const layout = d3.layout.cloud()
+                    .size([500, 400])
+                    .words(words.map(d => Object.create(d)))
+                    .padding(5)
+                    .rotate(d => (d.size > 30 ? 0 : ~~(Math.random() * 2) * 90))
+                    .font("Roboto")
+                    .fontSize(d => (d.size / maxCount) * 100)
+                    .on("end", draw);
+
+                layout.start();
+
+                function draw(words) {
+                    const svg = d3.select(containerId).append("svg")
+                        .attr("width", layout.size()[0])
+                        .attr("height", layout.size()[1])
+                        .append("g")
+                        .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")");
+
+                    const text = svg.selectAll("text")
+                        .data(words)
+                        .enter().append("text")
+                        .style("font-size", d => d.size + "px")
+                        .style("fill", (d, i) => d3.interpolateBlues((i + 4) / 22))
+                        .attr("text-anchor", "middle")
+                        .attr("transform", d => "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")")
+                        .text(d => d.text)
+                        .style("opacity", 0);
+
+                    text.transition()
+                        .delay((d, i) => i * 300)
+                        .duration(800)
+                        .style("opacity", 1);
+                }
+            }
+        });
+    </script>
+
+    <div class="content">
+        <p>The 1870s newspaper notices from The Australian Israelite primarily contained surnames popular among British Jews, such as Joseph, Solomon, Levy, Cohen and Harris. In contrast, the 1930s notices contain a far higher concentration of German and Eastern European surnames, such as Goldberg, Segal and Gurewicz. The 1950s notices contain an even higher concentration of German surnames like Friedman, Rosenbaum, Rubinstein and Gross. </p>
+        <p>This is further underscored by an inspection of the five surnames that increased the most in frequency between 1871-1875 and 1935-1939: Bernstein, Waxman, Rosenfeld, Kraetzer and Goldsmith. All are common German Jewish surnames.</p>
+    </div>
+
+    <!-- New Animated Plot -->
+    <div class="line-chart" id="line-chart"></div>
+
+    <script src="script.js"></script>
+
+    <script>
+        // Set up SVG and margins
+        var margin = {top: 20, right: 150, bottom: 30, left: 60},  // Increase right margin for label space
+            width = 800 - margin.left - margin.right,  // Increase total width to allow room for labels
+            height = 450 - margin.top - margin.bottom;
+
+        var svg = d3.select("#line-chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        // Data
+        var data = [
+            {label: "Bernstein", values: [0.009006, 0.029132]},
+            {label: "Waxman", values: [0.008335, 0.025862]},
+            {label: "Goldsmith", values: [0.005076, 0.011976]},
+            {label: "Kraetzer", values: [0.005076, 0.016667]},
+            {label: "Rosenfeld", values: [0.005939, 0.020977]}
+        ];
+
+        // X and Y scales
+        var x = d3.scalePoint()
+            .domain(["1870s", "1930s"])
+            .range([0, width]);
+
+        var y = d3.scaleLinear()
+            .domain([0, 0.03])
+            .range([height, 0]);
+
+        // Line generator
+        var line = d3.line()
+            .x(function (d, i) {
+                return x(i === 0 ? "1870s" : "1930s");
+            })
+            .y(function (d) {
+                return y(d);
+            });
+
+        // Colors
+        var color = d3.scaleOrdinal()
+            .domain(data.map(function (d) {
+                return d.label;
+            }))
+            .range(["#FF6F61", "#6B5B95", "#88B04B", "#ffd700", "#63a3db"]);  // Softer, varied colors
+
+        // Plot lines
+        data.forEach(function (d) {
+            var path = svg.append("path")
+                .datum(d.values)
+                .attr("fill", "none")
+                .attr("stroke", color(d.label))
+                .attr("stroke-width", 2)
+                .attr("d", line)
+                .attr("stroke-dasharray", function () {
+                    var totalLength = this.getTotalLength();
+                    return totalLength + " " + totalLength;
+                })
+                .attr("stroke-dashoffset", function () {
+                    return this.getTotalLength();
+                });
+
+            // Animate line on scroll
+            window.addEventListener('scroll', function () {
+                var chartPosition = svg.node().getBoundingClientRect();
+                if (chartPosition.top < window.innerHeight && chartPosition.bottom >= 0) {
+                    path.transition()
+                        .duration(2000)
+                        .attr("stroke-dashoffset", 0);
+                }
+            });
+
+            // Add round points at each end of the line
+            svg.selectAll(".dot")
+                .data(d.values)
+                .enter().append("circle")
+                .attr("cx", function(d, i) { return x(i === 0 ? "1870s" : "1930s"); })
+                .attr("cy", function(d) { return y(d); })
+                .attr("r", 5)
+                .attr("fill", color(d.label));
+
+            // Labels right next to the points
+            svg.append("text")
+                .attr("x", width + 5)  // Place label close to the point
+                .attr("y", y(d.values[1]))  // Align with the last point
+                .attr("dy", ".35em")
+                .attr("fill", color(d.label))
+                .style("font-size", "22px")
+                .style("font-weight", "bold")
+                .text(d.label);
+            });
+
+            svg.append("text")
+                .attr("x", -60)
+                .attr("y", y(0.005))  // Correctly use 0.005 for "0.5%"
+                .attr("dy", ".35em")
+                .attr("fill", "white")
+                .style("font-size", "16px")
+                .style("opacity", 0.7)  // Subtle effect
+                .text("0.5%");
+
+            svg.append("text")
+                .attr("x", -60)
+                .attr("y", y(0.025))  // Correctly use 0.025 for "2.5%"
+                .attr("dy", ".35em")
+                .attr("fill", "white")
+                .style("font-size", "16px")
+                .style("opacity", 0.7)  // Subtle effect
+                .text("2.5%");
+
+            svg.append("text")
+                .attr("x", x("1870s"))
+                .attr("y", height + 30)
+                .attr("fill", "white")
+                .style("font-size", "16px")
+                .style("opacity", 0.7)  // Subtle effect
+                .style("text-anchor", "middle")
+                .text("1870s");
+
+            svg.append("text")
+                .attr("x", x("1930s"))
+                .attr("y", height + 30)
+                .attr("fill", "white")
+                .style("font-size", "16px")
+                .style("opacity", 0.7)  // Subtle effect
+                .style("text-anchor", "middle")
+                .text("1930s");
+
+        // Minimal X and Y axis
+        svg.append("g")
+            .attr("class", "minimal-axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x).ticks(2));
+
+        svg.append("g")
+            .attr("class", "minimal-axis")
+            .call(d3.axisLeft(y).ticks(3));
+    </script>
+
+    <div class = "content">
+        <p>In short, Melbourne’s Jewish community became significantly more German and Eastern European between 1870 and 1960. This analysis of surnames is limited in its ability to identify specific migrant populations or quantify the community’s countries of origin. But it is clear that the community shifted from being mostly British in origin to having significant German and Eastern European populations. Many of these newly arrived Jews from continental Europe were also highly Orthodox, while the earlier British Jewish population had been more secular. This contributed to Melbourne’s reputation for having one of Australia’s more Orthodox Jewish communities (Shyovitz & Katz, n.d.).</p>
+    </div>
+
+    <h2 class = "sub">What Melbourne’s Jewish community discussed and cared about</h2>
+
+    <div class = "content">
+        <p>Finally, the Australian Jewish News can also shed light on the topics that occupied the Jewish community’s attention during this period. Topic modelling was used to identify six semantic clusters in the roughly 100,000 articles published in the Australian Jewish News between 1935 and 1960. These six topics, which account for around 60,000 of the 100,000 articles published, are community, social and religious life; Israel and Zionism; sports; the Holocaust and anti-semitism; clubs and education; and arts, literature and culture. </p>
+    </div>
+
+    <!-- Area Chart Container -->
+    <div class="area-chart-container">
+        <svg class="area-svg" width="800" height="400"></svg>
+        <div class="area-legend"></div>
+    </div>
+
+    <script>
+        // Load the data from the CSV file
+        d3.csv("data/topics.csv").then(function(data) {
+            // Parse the data
+            data.forEach(function(d) {
+                d.Year = +d.Year;
+                d.Frequency = +d.Frequency;
+            });
+
+            // Filter out data after 1959
+            data = data.filter(d => d.Year <= 1959);
+
+            // Group the data by Year and aggregate the Frequency by Topic
+            const topics = Array.from(new Set(data.map(d => d.Topic)));
+            const dataByYear = Array.from(d3.rollup(
+                data,
+                values => {
+                    const result = { Year: values[0].Year };  // Initialize with the year
+                    topics.forEach(topic => {
+                        result[topic] = d3.sum(values.filter(v => v.Topic === topic), d => d.Frequency) || 0;
+                    });
+                    return result;
+                },
+                d => d.Year
+            ), ([, value]) => value);
+
+            // Create the stack layout
+            const stack = d3.stack()
+                .keys(topics)
+                .order(d3.stackOrderNone)
+                .offset(d3.stackOffsetNone);
+
+            const stackedData = stack(dataByYear);
+
+            // Create an area chart based on the frequency of each topic by year
+            const svg = d3.select(".area-svg"),
+                  width = +svg.attr("width"),
+                  height = +svg.attr("height"),
+                  margin = { top: 20, right: 50, bottom: 40, left: 50 };
+
+            // X scale: Years (keep max at 1960, even though no data after 1959)
+            const x = d3.scaleLinear()
+                .domain([d3.min(data, d => d.Year), 1960])
+                .range([margin.left, width - margin.right]);
+
+            // Y scale: Cumulative frequencies
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(stackedData, layer => d3.max(layer, d => d[1])) * 1.1])
+                .range([height - margin.bottom, margin.top]);
+
+            const color = d3.scaleOrdinal(d3.schemeCategory10)
+                .domain(topics);
+
+            // Add the shaded region for the Second World War (1939-1945) **BEHIND the area plot**
+            svg.append("rect")
+                .attr("x", x(1939))
+                .attr("y", margin.top)
+                .attr("width", x(1945) - x(1939))  // Width is from 1939 to 1945
+                .attr("height", height - margin.top - margin.bottom)
+                .attr("fill", "rgba(150, 150, 150, 0.3)");  // Subtle shaded area
+
+            // Define the area generator for stacked data
+            const area = d3.area()
+                .x(d => x(d.data.Year))
+                .y0(d => y(d[0]))
+                .y1(d => y(d[1]))
+                .curve(d3.curveMonotoneX);  // Smooth curve
+
+            // Add the stacked areas for each topic
+            svg.selectAll(".area")
+                .data(stackedData)
+                .enter().append("path")
+                .attr("class", "area")
+                .attr("fill", d => color(d.key))
+                .attr("d", area)
+                .style("opacity", 0)  // Start with 0 opacity for animation
+                .transition()  // Gradually fill in on scroll
+                .duration(2000)
+                .delay((d, i) => i * 200)
+                .style("opacity", 1);
+
+            // Add the x-axis
+            svg.append("g")
+                .attr("class", "area-axis")
+                .attr("transform", `translate(0, ${height - margin.bottom})`)
+                .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));  // Subtle x-axis with year labels
+
+            // Add the legend
+            const legend = d3.select(".area-legend");
+            topics.forEach(function(topic) {
+                const legendItem = legend.append("div").attr("class", "area-legend-item");
+                legendItem.append("div")
+                    .attr("class", "area-legend-color-box")
+                    .style("background-color", color(topic));
+                legendItem.append("span").text(topic);
+            });
+
+            // Add label for "Second World War" **aligned vertically with the Israel label**
+            const labelYPosition = margin.top + 20;  // Set the same y position for both labels
+
+            // Label for "Second World War"
+            svg.append("text")
+                .attr("x", (x(1939) + x(1945)) / 2)  // Center label between 1939 and 1945
+                .attr("y", labelYPosition)
+                .attr("text-anchor", "middle")
+                .attr("fill", "white")
+                .text("Second World War");
+
+            // Add vertical line for the Founding of Israel (1948)
+            svg.append("line")
+                .attr("x1", x(1948))
+                .attr("x2", x(1948))
+                .attr("y1", margin.top)
+                .attr("y2", height - margin.bottom)
+                .attr("stroke", "rgba(255, 255, 255, 0.7)")
+                .attr("stroke-width", 2)
+                .attr("stroke-dasharray", "4,4");  // Dashed line
+
+            // Add label for "Founding of Israel" **aligned with the war label**
+            svg.append("text")
+                .attr("x", x(1948) + 5)  // Slightly offset from the line
+                .attr("y", labelYPosition)  // Same y position as the "Second World War" label
+                .attr("text-anchor", "start")
+                .attr("fill", "white")
+                .text("Founding of Israel");
+
+            svg.append("text")
+                .attr("x", width - margin.right - 5)  // Positioned near the right edge
+                .attr("y", height + margin.bottom - 42)  // Adjust position to stay above the axis
+                .attr("text-anchor", "end")  // Align text to the right
+                .attr("fill", "white")
+                .style("font-size", "12px")
+                .style("opacity", 0.7)
+                .style("pointer-events", "none")  // Ensure it doesn't interfere with other elements
+                .text("*Publication of the AJN was more infrequent in 1953");
+
+        });
+    </script>
+
+    <div class="content">
+        <p>Discussion of sports, clubs and education, and community and social life increased after the war, indicating the increased vibrancy of Jewish community life in the post-war period as the community grew in size. But interestingly, discussion of arts, literature and culture decreased. This has been identified as one of the lasting impacts of the Holocaust — the Holocaust decimated the once-vibrant Yiddish theatre and literature scene, destroying much of Jewish literary and artistic tradition (Schwarz, 2015). Discussions of music, theatre, literature and the arts in the Australian Jewish News were noticeably less frequent after the Second World War. </p>
+        <p>Meanwhile, discussions of Israel remained relatively constant throughout this period, but unsurprisingly increased somewhat during Israel’s founding years. Articles about the Holocaust and antisemitism peaked in the pre-war years as persecution of Jews in Europe grew, and peaked again in the later years of the war as information about the extent of the Nazi regime’s genocide began to be revealed.</p>
+        <p>Another way of shedding light on what the Jewish community in Melbourne cared about is to focus on the charitable appeals and causes that attracted their attention. A dataset of 3674 articles identified through keyword matching as being about charitable or fundraising appeals was used to identify causes and appeals that attracted attention in the Australian Jewish News. Named entity recognition and keyword searches were then used to classify roughly 60% of these appeals as being for one of seven prominent causes or organisations.</p>
+    </div>
 
         <div class="charity-container">
             <div class="charity-buttons-container">
@@ -1209,32 +1277,49 @@
         </script>
 
         <div class="content">
-            <p>
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <p>The Jewish community in Melbourne was cleared highly invested in the plight of Jews in Europe facing persecution, with frequent appeals to help these communities as persecution mounted. This included appeals to support Youth Aliyah and the Save a Child campaign. Following the war, there was a rapid uptick in fundraising by the Australian Jewish Welfare and Relief Society, which helped thousands of new Jewish arrivals to settle in Australia. Between 1945 and 1960 there was also a steep increase in fundraising for the United Israel Appeal and the Women’s International Zionist Organization, both of which primarily supported social welfare projects in Israel, demonstrating the community’s support for the Jewish state-building project. There was also a steep increase in fundraising for local religious, cultural, sporting and educational institutions in the post-war period, reflecting the rapid growth in Jewish community institutions established to support the growing Jewish population in this period. </p>
+        </div>
 
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <h2 class = "sub">Evaluation and methodology</h2>
 
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <div class = "content">
+            <p>In addition to shedding light on Jewish life in Melbourne in this period, this project serves as a demonstration of the many applications of generative artificial intelligence to digital humanities research (Aguiar & Araujo, 2024). Generative artificial intelligence has been used heavily in this project to clean and process data, particularly to convert raw text files into structured, machine-readable data that can be more readily mapped and analysed. The use of generative artificial intelligence is an emerging technique in the digital humanities that can allow for more efficient text processing (Chang et al., 2023; Dedema & Ma, 2024), and for creative new ways of engaging with information (Kanter, 2024)./p>
+            <p>However, this technique has its drawbacks. Artificial intelligence is a fast and efficient way of processing information but is prone to hallucinations and errors. This has been identified as a major barrier to its application in the digital humanities (Dedema & Ma, 2024). This project primarily aims to shed light on community-wide trends, which are largely robust to the occasional errors introduced by artificial intelligence. But readers cannot rely on the accuracy of many of the specific points of data in this project, such as the accuracy of the individual family notices included on the initial map.</p>
+        </div>
 
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+        <h2 class = "sub">Conclusion</h2>
+
+        <div class = "content">
+            <p>In sum, the Jewish community of Melbourne saw profound transformations between 1935 and 1960. The community tripled in size and became far more tightly clustered in St Kilda and Caulfield after the war, building many new educational, religious, sporting and cultural institutions in these neighbourhoods. Discussions of sports, education and clubs grew rapidly after the war, demonstrating the significant growth of community institutions in what was a larger, more religious, and more tightly connected community. The community also showed a clear concern both before and during the war for the plight of European Jews, ultimately supporting thousands of refugees and Holocaust survivors to settle in Australia. It also heavily supported the Zionist cause, particularly after the war, devoting significant attention to supporting Israeli state-building projects. </p>
+            <p>By 1960, Melbourne’s Jewish community was much larger and more diverse and religiously Orthodox. Melbourne’s Jewish community was home to a significant population of Holocaust survivors and much of the community turned towards the nascent State of Israel as the focal point for their cultural and religious identity. The institutions established in this period, such as Mount Scopus College and the Elwood and Caulfield synagogues, continue to be among the most central institutions for the community to this day. The vast majority of the community also remains highly connected to the State of Israel and to the global Jewish diaspora, a perspective shaped by the events of this period. The period surrounding the Second World War remains critical to understanding the cultural memory and composition of the contemporary Australian Jewish community.</p>
+        </div>
+
+        <h2 class = "sub">References</h2>
+
+        <div class = "content">
+            <p>Aguiar, M. and Araújo, S., 2024. Final Thoughts: Digital Humanities Looking at Generative AI. In Digital Humanities Looking at the World: Exploring Innovative Approaches and Contributions to Society (pp. 367-380). Cham: Springer Nature Switzerland.</p>
+            <p>Burstin, S., 1967. Jewish Life in Melbourne. In The Third Australian Yiddish Almanac. Kadimah Jewish Cultural Centre and National Library.</p>
+            <p>Carlton Heritage Review, 2019. Prepared by Lovell Chen and Extent Heritage Advisors for the City of Melbourne.</p>
+            <p>Chang, L., Dongbo, W., Zhixiao, Z., Die, H., Mengcheng, W., Litao, L., Si, S., Bin, L., Jiangfeng, L., Hai, Z. and Lianzheng, Z., 2023. SikuGPT: A generative pre-trained model for intelligent information processing of ancient texts from the perspective of digital humanities. arXiv preprint arXiv:2304.07778.</p>
+            <p>Dedema, M. and Ma, R., 2024. The collective use and evaluation of generative AI tools in digital humanities research: Survey-based results. arXiv preprint arXiv:2404.12458.</p>
+            <p>Friesel, E., 1996. The Holocaust. Factor in the Birth of Israel. Major Changes within the Jewish People in the Wake of the Holocaust, Jerusalem, pp.519-544.</p>
+            <p>Freeman, L., 2019. 100 Years Ago: Victoria 1919. Australian Jewish Historical Society Journal 24(3), pp.562-564.</p>
+            <p>Gale, N., 1994. A case of double rejection: The immigration of Sephardim to Australia. Journal of Ethnic and Migration Studies, 20(2), pp.269-286.</p>
+            <p>Gilbert, M., 1978. Exile and Return: The Struggle for a Jewish Homeland. Lippincott.</p>
+            <p>Kaiser, M., 2018. Between nationalism and assimilation: Jewish antifascism in Australia in the late 1940s and early 1950s. Doctoral dissertation, University of Melbourne.</p>
+            <p>Kaiser, M., 2020. ‘Jewish Culture is Inseparable From the Struggle Against Reaction’: Forging an Australian Jewish Antifascist Culture in the 1940s. Fascism, 9(1-2), pp.34-55.</p>
+            <p>Kanter, D., 2024. Generative Text for/by/with Digital Humanists. University of Reading, 5 July 2024. Available at <a href="https://research.reading.ac.uk/digitalhumanities/generative-text-for-by-with-digital-humanists/">https://research.reading.ac.uk/digitalhumanities/generative-text-for-by-with-digital-humanists/</a>. Accessed 8 October 2024.</p>
+            <p>Melbourne Hebrew Congregation. Early History. Available at <a href="https://www.melbournesynagogue.org.au/early-history.html">https://www.melbournesynagogue.org.au/early-history.html</a>. Accessed 7 October 2025.</p>
+            <p>Rubenstein, H.L., 2021. 50 Years Ago: Glimpsing Melbourne Jewry Through The Australian Jewish News, 1971. Australian Jewish Historical Society Journal 25(3), pp.525-34.</p>
+            <p>Rutland, S.D., 1988. Edge of the Diaspora: Two centuries of Jewish settlement in Australia. Collins.</p>
+            <p>Rutland, S.D., 1995. Pages of History: A Century of the Australian Jewish Press. Sydney: Australian Jewish Press.</p>
+            <p>Rutland, S.D., 2006. The Jews in Australia. Cambridge University Press.</p>
+            <p>Rutland, S.D., 2008. The Jews in Sydney. Sydney Journal, 1(3).</p>
+            <p>Schwarz, J., 2015. Survivors and Exiles: Yiddish Culture after the Holocaust. Wayne State University Press.</p>
+            <p>Shyovitz, D. and Bard, M. Australia Virtual Jewish History Tour. Jewish Virtual Library. Available at <a href="https://www.jewishvirtuallibrary.org/australia-virtual-jewish-history-tour">https://www.jewishvirtuallibrary.org/australia-virtual-jewish-history-tour</a>. Accessed 5 October 2024.</p>
+            <p>Stratton, J., 1996. The colour of Jews: Jews, race and the White Australia policy. Journal of Australian Studies, 20(50-51), pp.51-65.</p>
         </div>
 
     </body>
     </html>
+
